@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <title>EcoRide</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="bar"><a href="index.html"><img class="logo" src="images/in%20app%20logo.svg" alt="EcoRide"></a></header>
+    <button class="backlink" type="button" aria-label="Go back" data-i="back" onclick="history.back()"></button>
+    <div class="step"><b>3</b><i></i><span>Verification Successful</span></div>
+    <main class="stack">
+        <span class="shield" data-i="shield"></span>
+        <img class="hero" src="images/car.png" alt="">
+        <h1>Verification Successful</h1>
+        <p class="sub">Your identity has been verified, you're now ready to ride with EcoRide</p>
+        <button class="btn" id="c">Continue</button>
+    </main>
+    <script src="app.js"></script>
+    <script>
+        document.getElementById('c').onclick = () => go('index.html');
+    </script>
+</body>
+
+</html>

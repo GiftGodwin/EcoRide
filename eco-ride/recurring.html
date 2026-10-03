@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Recurring commute | EcoRide</title>
+  <link rel="icon" href="images/favicon.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="recurring.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+</head>
+<body>
+  <header class="app-header">
+    <a class="brand" href="index.html"><img src="images/in%20app%20logo.svg" alt="EcoRide"></a>
+    <nav><a href="index.html">Home</a><a href="booking.html">Ride</a><a href="#wallet">Wallet</a><a class="active" href="recurring.html">Recurring Commute</a><a href="#help">Help</a></nav>
+    <div class="header-user"><span class="avatar" aria-hidden="true"></span><span class="user-name"></span></div>
+  </header>
+
+  <main class="page-shell">
+    <button class="back" type="button" aria-label="Go back" data-i="back" onclick="history.back()"></button>
+    <h1>Set up your recurring commute</h1>
+    <p class="intro">Save your regular route and schedule for faster bookings.</p>
+
+    <div class="layout">
+      <form id="commute-form" class="form-panel">
+        <section class="form-section"><h2><b>1</b>Route</h2><button class="open-route-map" id="open-route-map" type="button">⌖ Choose route on map</button><div class="route-fields"><label><div class="input-wrap"><i>⌖</i><input id="from" placeholder="Enter pickup location" required><button type="button" data-clear="from">×</button></div></label><label><div class="input-wrap"><i>⌖</i><input id="to" placeholder="Enter destination" required><button type="button" data-clear="to">×</button></div></label></div></section>
+        <section class="form-section"><h2><b>2</b>Pickup point</h2><label class="wide-field"><div class="input-wrap"><i class="pin">⌖</i><input id="pickup" placeholder="Enter pickup point" required><button type="button" data-clear="pickup">×</button></div></label><div id="route-map" class="route-map" role="img" aria-label="Interactive route map"></div><p class="service-note">⋮ <span>Enter your route to view it on the map.</span></p></section>
+        <section class="form-section"><h2><b>3</b>Which days do you commute?</h2><div class="day-list" role="group" aria-label="Commute days"> <button type="button" class="day" data-day="Mon">Mon</button><button type="button" class="day" data-day="Tue">Tue</button><button type="button" class="day" data-day="Wed">Wed</button><button type="button" class="day" data-day="Thu">Thu</button><button type="button" class="day" data-day="Fri">Fri</button><button type="button" class="day" data-day="Sat">Sat</button><button type="button" class="day" data-day="Sun">Sun</button></div></section>
+        <section class="form-section time-section"><h2><b>4</b>What time do you usually leave?</h2><label class="time-field"><span>Select departure time</span><div><i>◷</i><input id="departure-time" type="time" required></div></label></section>
+        <section class="summary"><h2>♧ <span>Recurring commute summary</span></h2><div class="summary-grid"><div><b>⌖ <span id="summary-route">—</span></b><small>Route</small></div><div><b>⌖ <span id="summary-pickup">Pickup: —</span></b><small>Pickup point</small></div><div><b>▣ <span id="summary-days">—</span></b><small>Days</small></div><div><b>◷ <span id="summary-time">—</span></b><small>Departure time</small></div></div></section>
+        <button class="save" id="save" type="submit">Save recurring commute</button>
+      </form>
+      <aside class="preview-card"><div id="preview-map" class="preview-map" role="img" aria-label="Interactive commute map preview"></div><div class="preview-details"><p><b>⌖</b><strong>From</strong><span id="preview-from">—</span></p><p><b>⌖</b><strong>Pickup point</strong><span id="preview-pickup">—</span></p><p><b>⌖</b><strong>To</strong><span id="preview-to">—</span></p></div><div class="preview-brand"><strong><span>Eco</span><em>Ride</em></strong><small>Your regular commute, made easier</small><span class="mini-car">▰</span></div></aside>
+    </div>
+  </main>
+  <div class="route-map-overlay hidden" id="route-map-overlay" role="dialog" aria-modal="true" aria-labelledby="route-map-title"><div class="route-map-modal"><div class="route-map-head"><div><strong id="route-map-title">Choose route on map</strong><span id="route-map-help">Select a point, then choose what it represents.</span></div><button class="map-close" id="close-route-map" type="button" aria-label="Close map">×</button></div><div class="route-map-toolbar" role="group" aria-label="Map point type"><button type="button" class="map-mode active" data-map-mode="from">Pickup location</button><button type="button" class="map-mode" data-map-mode="pickup">Pickup point</button><button type="button" class="map-mode" data-map-mode="to">Destination</button></div><div id="route-map-overlay-canvas" class="route-map-overlay-canvas"></div><div class="route-map-actions"><button class="outline" id="clear-map-points" type="button">Clear points</button><button class="primary" id="done-route-map" type="button">Use selected route</button></div></div></div>
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script src="recurring.js"></script>
+</body>
+</html>

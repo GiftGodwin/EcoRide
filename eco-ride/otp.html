@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <title>EcoRide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="otp-page">
+    <header class="bar"><a href="index.html"><img class="logo" src="images/in%20app%20logo.svg" alt="EcoRide"></a></header>
+    <button class="backlink" type="button" aria-label="Go back" data-i="back" onclick="history.back()"></button>
+    <div class="step"><b>1</b><i></i><span>OTP Verification</span></div>
+    <main class="split">
+        <section class="side">
+            <h1>OTP Verification</h1>
+            <p class="sub" id="sub">Enter the 6-digit code sent to your email</p>
+            <div class="otp" id="otp"></div>
+            <p class="resend" id="resend-wrap">Didn't receive a code? <button type="button" id="resend" disabled>Resend OTP</button> <span id="timer" aria-live="polite">in 60s</span></p>
+            <button class="btn" id="verify" disabled>Continue</button>
+        </section>
+        <div class="art">
+            <svg viewBox="0 0 520 520" role="img" aria-label="Phone showing a verified shield">
+                <circle cx="260" cy="270" r="250" fill="#EAF7EE"/>
+                <g transform="rotate(6 270 270)">
+                    <rect x="165" y="50" width="210" height="440" rx="36" fill="#F3FBF5" stroke="#0E766E" stroke-width="6"/>
+                    <path d="M230 52h80v14a8 8 0 0 1-8 8h-64a8 8 0 0 1-8-8z" fill="#fff" stroke="#0E766E" stroke-width="5"/>
+                    <text x="205" y="132" font-family="Manrope,sans-serif" font-weight="800" font-size="30" fill="#0E766E">Eco<tspan fill="#F59A23">Ride</tspan></text>
+                    <path d="M270 205l52 20v42c0 36-24 60-52 74-28-14-52-38-52-74v-42z" fill="#0E766E"/>
+                    <path d="M247 275l18 18 33-36" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+            </svg>
+        </div>
+    </main>
+    <script src="app.js"></script>
+    <script>
+        const box = document.getElementById('otp');
+        const verifyButton = document.getElementById('verify');
+        const resendButton = document.getElementById('resend');
+        const timer = document.getElementById('timer');
+        const email = store.get('email');
+        const phone = store.get('phone');
+        const hasIdentity = Boolean(email || phone);
+        const masked = email
+            ? email.replace(/^(.{2}).*(@.*)$/, '$1***$2')
+            : phone
+                ? phone.slice(0, 4) + ' *** *** ' + phone.slice(-4)
+                : '';
+
+        if (hasIdentity) {
+            document.getElementById('sub').textContent = 'Enter the 6-digit code sent to ' + masked;
+        }
+
+        let cooldown;
+        const sendOtp = async () => {
+            if (!email) throw new Error('OTP verification requires an email address.');
+            await api('/api/auth/send-otp', { method: 'POST', body: { email } });
+            store.set('otp_sent_at', String(Date.now()));
+        };
+        const startCooldown = () => {
+            clearInterval(cooldown);
+            const tick = () => {
+                const elapsed = Math.floor((Date.now() - Number(store.get('otp_sent_at') || Date.now())) / 1000);
+                const remaining = Math.max(0, 60 - elapsed);
+                timer.textContent = remaining > 0 ? 'in ' + remaining + 's' : '';
+                resendButton.disabled = remaining > 0;
+                if (!remaining) clearInterval(cooldown);
+            };
+            tick();
+            cooldown = setInterval(tick, 1000);
+        };
+        startCooldown();
+        if (!store.get('otp_sent_at')) sendOtp().then(startCooldown).catch(error => toast(error.message));
+        resendButton.onclick = () => busy(resendButton, async () => {
+            try { await sendOtp(); startCooldown(); toast('A new OTP has been sent.'); }
+            catch (error) { toast(error.message); }
+        });
+
+        box.innerHTML = '<input inputmode="numeric" maxlength="1" autocomplete="one-time-code">'.repeat(6);
+        const inputs = [...box.children];
+        const code = () => inputs.map(input => input.value).join('');
+        const sync = () => {
+            verifyButton.disabled = code().length !== 6;
+            box.classList.remove('err');
+        };
+
+        inputs.forEach((input, index) => {
+            input.oninput = () => {
+                input.value = input.value.slice(-1);
+                if (input.value && inputs[index + 1]) inputs[index + 1].focus();
+                sync();
+            };
+            input.onkeydown = event => {
+                if (event.key === 'Backspace' && !input.value && inputs[index - 1]) {
+                    inputs[index - 1].focus();
+                    inputs[index - 1].value = '';
+                    sync();
+                }
+                if (event.key === 'Enter' && !verifyButton.disabled) verifyButton.click();
+            };
+            input.onpaste = event => {
+                event.preventDefault();
+                const values = (event.clipboardData.getData('text') || '').slice(0, 6);
+                [...values].forEach((value, valueIndex) => inputs[valueIndex].value = value);
+                inputs[Math.min(values.length, 5)].focus();
+                sync();
+            };
+        });
+        inputs[0].focus();
+
+        let verified = false;
+        let nextTimer;
+        verifyButton.onclick = () => {
+            if (verified) {
+                clearTimeout(nextTimer);
+                go('nin.html');
+                return;
+            }
+            if (code().length !== 6) return;
+
+            if (!email) {
+                toast('An email address is required to verify this code.');
+                box.classList.add('err');
+                return;
+            }
+
+            busy(verifyButton, async () => {
+                try {
+                    await api('/api/auth/verify-otp', {
+                        method: 'POST',
+                        body: { email, otp: code() }
+                    });
+                    verified = true;
+                    box.hidden = true;
+                    box.style.display = 'none';
+                    document.querySelector('.side h1').textContent = 'Verification successful';
+                    const sub = document.getElementById('sub');
+                    sub.textContent = 'Your email has been verified. Continuing to identity verification…';
+                    sub.style.color = 'var(--teal)';
+                    sub.style.fontWeight = '600';
+                    verifyButton.textContent = 'Continue';
+                    verifyButton.disabled = false;
+                    toast('OTP verified successfully.');
+                    nextTimer = setTimeout(() => go('nin.html'), 1600);
+                } catch (error) {
+                    box.classList.add('err');
+                    toast(error.message);
+                }
+            });
+        };
+    </script>
+</body>
+</html>
