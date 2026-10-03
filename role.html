@@ -14,7 +14,7 @@
 
 <body>
     <header class="bar"><a href="index.html"><img class="logo" src="images/in%20app%20logo.svg" alt="EcoRide"></a></header>
-    <button class="backlink" type="button" onclick="history.back()">Back</button>
+    <button class="backlink" type="button" aria-label="Go back" data-i="back" onclick="history.back()"></button>
     <main class="panel">
         <img class="hero" src="images/carwith%20house%20drawings.png" alt="">
         <h1>Are you a passenger or a driver?</h1>
@@ -23,7 +23,16 @@
     </main>
     <script src="app.js"></script>
     <script>
-        document.querySelectorAll('[data-role]').forEach(b => b.onclick = () => { store.set('role', b.dataset.role); go('otp.html') });
+        document.querySelectorAll('[data-role]').forEach(b => b.onclick = () => busy(b, async () => {
+            const email = store.get('email');
+            if (!email) { toast('OTP verification requires the email sign-up option.'); return; }
+            try {
+                await api('/api/auth/send-otp', { method: 'POST', body: { email } });
+                store.set('role', b.dataset.role);
+                store.set('otp_sent_at', String(Date.now()));
+                go('otp.html');
+            } catch (error) { toast(error.message); }
+        }));
     </script>
 </body>
 

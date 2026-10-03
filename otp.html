@@ -72,14 +72,8 @@
             tick();
             cooldown = setInterval(tick, 1000);
         };
-
-         sendOtp()
-         .then(() => {
-            startCooldown();
-            toast('A new OTP has been sent.');
-         })
-         .catch(error => toast(error.message));
-
+        startCooldown();
+        if (!store.get('otp_sent_at')) sendOtp().then(startCooldown).catch(error => toast(error.message));
         resendButton.onclick = () => busy(resendButton, async () => {
             try { await sendOtp(); startCooldown(); toast('A new OTP has been sent.'); }
             catch (error) { toast(error.message); }

@@ -14,7 +14,7 @@
 
 <body>
     <header class="bar"><a href="index.html"><img class="logo" src="images/in%20app%20logo.svg" alt="EcoRide"></a></header>
-    <button class="backlink" type="button" onclick="history.back()">Back</button>
+    <button class="backlink" type="button" aria-label="Go back" data-i="back" onclick="history.back()"></button>
     <main class="panel">
         <h1>Welcome Back</h1>
         <p class="sub">Sign in to your <span class="eco">Eco<i>Ride</i></span> account</p>
@@ -160,6 +160,9 @@
             busy(nx, async () => {
                 try {
                     const d = await api('/api/auth/login', { method: 'POST', body });
+                    const account = d?.user || d?.data?.user || d?.data || d;
+                    const displayName = account?.firstName || account?.first_name || account?.name || account?.fullName || account?.email || account?.phone || id;
+                    if (displayName) store.set('name', displayName);
                     if ($('remember').checked) store.set('login_id', id); else localStorage.removeItem('eco_login_id');
                     const role = d?.role || d?.user?.role || store.get('role');
                     if (d?.role || d?.user?.role) store.set('role', role);

@@ -73,3 +73,39 @@ async function busy(btn, fn) {
     btn.disabled = false;
   }
 }
+
+// Shared floating placeholders: the placeholder remains the source text and floats
+// into the border when a field is focused or contains a value.
+document.querySelectorAll('input[placeholder], textarea[placeholder]').forEach((input) => {
+  if (input.closest('.otp') || input.type === 'checkbox' || input.type === 'radio' || input.parentElement.querySelector('.floating-label')) return;
+  const host = input.closest('.field, .input-wrap, .floating-field, label') || input.parentElement;
+  if (host.querySelector('.floating-label')) return;
+  const label = document.createElement('span');
+  label.className = 'floating-label';
+  label.textContent = input.getAttribute('placeholder') || input.getAttribute('aria-label') || '';
+  host.classList.add('has-floating-label');
+  input.setAttribute('aria-label', input.getAttribute('aria-label') || label.textContent);
+  host.appendChild(label);
+});
+
+// Hydrate app headers from the authenticated account only; no placeholder user is shown.
+(() => {
+  const readTokenName = () => {
+    try {
+      const token = store.get('token');
+      const payload = token?.split('.')[1];
+      const data = payload ? JSON.parse(atob(payload.replace(/-/g,'+').replace(/_/g,'/'))) : null;
+      return data?.name || data?.fullName || data?.firstName || data?.email || data?.phone || '';
+    } catch (_) { return ''; }
+  };
+  const name = store.get('name') || store.get('user_name') || readTokenName();
+  document.querySelectorAll('.header-user').forEach(header => {
+    const nameNode = header.querySelector('.user-name');
+    const avatar = header.querySelector('.avatar');
+    if (!name) { header.hidden = true; return; }
+    const display = name.trim();
+    if (nameNode) nameNode.textContent = display;
+    if (avatar) avatar.textContent = display.charAt(0).toUpperCase();
+    header.hidden = false;
+  });
+})();
