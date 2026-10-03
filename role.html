@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <title>EcoRide</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="bar"><a href="index.html"><img class="logo" src="images/in%20app%20logo.svg" alt="EcoRide"></a></header>
+    <button class="backlink" type="button" onclick="history.back()">Back</button>
+    <main class="panel">
+        <img class="hero" src="images/carwith%20house%20drawings.png" alt="">
+        <h1>Are you a passenger or a driver?</h1>
+        <p class="sub">Choose whether you are joining the <span class="eco">Eco<i>Ride</i></span> family as a passenger or as a driver</p>
+        <div class="btns"><button class="btn" data-role="passenger">I'm a passenger</button><button class="btn alt" data-role="driver">I'm a driver</button></div>
+    </main>
+    <script src="app.js"></script>
+    <script>
+        document.querySelectorAll('[data-role]').forEach(b => b.onclick = () => { store.set('role', b.dataset.role); go('otp.html') });
+    </script>
+</body>
+
+</html>

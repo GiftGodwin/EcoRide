@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <title>EcoRide</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="bar"><a href="index.html"><img class="logo" src="images/in%20app%20logo.svg" alt="EcoRide"></a></header>
+    <button class="backlink" type="button" onclick="history.back()">Back</button>
+    <div class="step"><b>2</b><i></i><span>Face Verification</span></div>
+    <main class="stack">
+        <h1>Face Verification</h1>
+        <p class="sub">Position your face within the frame and look straight at the camera</p>
+        <div class="frame"><img src="images/face%20verification.png" alt=""><video id="cam" playsinline muted></video></div>
+        <button class="btn" id="st">Continue</button>
+    </main>
+    <script src="app.js"></script>
+    <script>
+        const cam = document.getElementById('cam'), st = document.getElementById('st');
+        let stream, live = false;
+        st.onclick = () => live ? snap() : start();
+        async function start() {
+            try { stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false }); cam.srcObject = stream; await cam.play(); cam.classList.add('live'); live = true; st.textContent = 'Capture photo' }
+            catch { go('success.html') }
+        }
+        function snap() {
+            const c = document.createElement('canvas'); c.width = cam.videoWidth; c.height = cam.videoHeight; c.getContext('2d').drawImage(cam, 0, 0);
+            c.toBlob(() => { stream.getTracks().forEach(t => t.stop()); go('success.html') }, 'image/jpeg', .9);
+        }
+    </script>
+</body>
+
+</html>
