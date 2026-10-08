@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dashboard | EcoRide</title>
+  <link rel="icon" href="images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="pages.css">
+</head>
+
+<body class="">
+  <div class="boxed">
+    <div class="boxed-top"><a href="index.html" aria-label="EcoRide home"><img src="images/in%20app%20logo.svg"
+          alt="EcoRide"></a><a class="help" href="#"><i data-ic="help"></i>Help &amp; support</a></div>
+    <div class="frame">
+      <nav class="sidecard" aria-label="Main navigation"><a href="dashboard.html" class=active><i
+            data-ic="home"></i>Dashboard</a><a href="#"><i data-ic="car"></i>My Rides</a><a href="#"><i
+            data-ic="card"></i>Payments</a><a href="#"><i data-ic="coins"></i>Earnings</a></nav>
+      <main class="panel">
+        <div class="panel-head">
+          <div>
+            <h1>Dashboard</h1>
+            <p class="page-sub">Your rides, payments and activity in one place.</p>
+          </div><span class="muted" data-today></span>
+        </div>
+        <div class="banner"><span class="bi"><i data-ic="check"></i></span>
+          <div><b>Payment received!</b><small>Your ₦ — bank transfer has been confirmed.</small></div><a class="link"
+            href="checkout.html?state=receipt">View receipt <i data-ic="arrow"></i></a>
+        </div>
+        <div class="mini3">
+          <div class="mini">
+            <div>Latest payment <i data-ic="receipt"></i></div><strong>₦ —</strong><small>Total paid · fees
+              included</small>
+          </div>
+          <div class="mini">
+            <div>Payment status <i data-ic="shield"></i></div><strong>—</strong><small>Bank transfer · —</small>
+          </div>
+          <div class="mini">
+            <div>Earnings <i data-ic="coins"></i></div><a class="big-link" href="#">View earnings →</a><small>Separate
+              from your ride payments</small>
+          </div>
+        </div>
+        <div class="two">
+          <section class="box">
+            <div class="box-head">
+              <h2>Your rides</h2><a class="link" href="#">View all →</a>
+            </div>
+            <div class="rrow"><span class="ri"><i data-ic="car"></i></span>
+              <div><b>Recently paid ride</b><small>—</small></div><span class="pill soft"
+                style="margin-left:auto">—</span>
+            </div>
+            <p class="note">Open My Rides to see the trip details and booking information.</p>
+            <div class="bottom-row"><span>₦ — total paid</span><a class="btn" href="#">Open My Rides</a></div>
+          </section>
+          <section class="box">
+            <div class="box-head">
+              <h2>Quick actions</h2>
+            </div>
+            <a class="qlink" href="passenger-dashboard.html"><i data-ic="car"></i><span><b>Find a ride</b><small>Plan
+                  your next journey</small></span><span class="go"><i data-ic="arrow"></i></span></a>
+            <a class="qlink" href="#"><i data-ic="receipt"></i><span><b>Payment history</b><small>View payments and
+                  receipts</small></span><span class="go"><i data-ic="arrow"></i></span></a>
+            <p class="note" style="margin-bottom:0">Your latest receipt is saved in Payments.</p>
+          </section>
+        </div>
+        <div class="sec-head" style="margin-bottom:0">
+          <h2 style="font-size:20px;font-weight:600">Recent activity</h2><a class="link" href="#">View payments →</a>
+        </div>
+        <div class="act">
+          <div class="act-row"><span class="act-ic"><i data-ic="check"></i></span>
+            <div class="ab"><b>Bank transfer confirmed <span class="pill soft">—</span></b><small>— · —</small></div>
+            <div class="ar"><b>₦ —</b>—</div>
+          </div>
+          <div class="act-row"><span class="act-ic g"><i data-ic="receipt"></i></span>
+            <div class="ab"><b>Your receipt is ready</b><small>— · Download a copy for your records.</small></div><a
+              class="link" href="checkout.html?state=receipt">Download receipt</a>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+  <script src="pages.js"></script>
+</body>
+
+</html>

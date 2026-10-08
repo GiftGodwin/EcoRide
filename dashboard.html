@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Payment | EcoRide</title>
+    <link rel="icon" href="images/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="booking.css">
+</head>
+
+<body data-page="checkout">
+    <header class="app-header"><a class="brand" href="index.html"><img src="images/in%20app%20logo.svg"
+                alt="EcoRide"></a>
+        <nav><a href="index.html">Home</a><a class="active" href="booking.html">Ride</a><a href="#wallet">Wallet</a><a
+                href="#help">Help</a></nav>
+        <div class="header-user"><span class="avatar" aria-hidden="true"></span><span class="user-name"></span></div>
+    </header>
+    <div class="checkout-progress"><span class="active"><i>1</i>Fare breakdown</span><span><i>2</i>Payment
+            method</span><span><i>3</i>Confirmation</span><span><i>4</i>Receipt</span></div>
+    <main class="checkout-shell">
+        <aside class="map-card">
+            <div class="map-art"></div>
+            <div class="location"><b>⌖　Pickup location</b><small>—</small><b
+                    class="orange-text">⌖　Destination</b><small>—</small></div>
+            <div class="vehicle"><span>▱</span>
+                <div><b>Vehicle</b><small>—</small></div><strong>›</strong>
+            </div>
+            <div class="date">▣　 Schedule —</div>
+        </aside>
+        <section class="checkout-card">
+            <div id="fare-state" class="checkout-state">
+                <h1>Fare breakdown</h1>
+                <div class="fare-line"><span class="person-icon">♙</span>
+                    <div><b>Passenger fare</b><small>Base fare + distance + time</small></div><strong>—</strong>
+                </div>
+                <h2>EcoRide fees <small>ⓘ</small></h2>
+                <div class="fee-lines"><span>Service fee <b>—</b></span><span>Platform fee <b>—</b></span><span>Booking
+                        fee <b>—</b></span></div>
+                <div class="total-box"><b>Total amount</b><strong>—</strong><small>ⓘ　Ecoride fees help us maintain
+                        reliable service, support drivers and keep the platform running smoothly.</small></div>
+                <h2>Choose payment method</h2><label class="payment-option"><input type="radio" name="method"
+                        value="card"><i></i><span>▣</span><b>Card <small>(Visa, Mastercard,
+                            etc.)</small></b></label><label class="payment-option"><input type="radio" name="method"
+                        value="bank"><i></i><span>▥</span><b>Bank transfer <small>(Bank account /
+                            USSD)</small></b></label><button class="primary" id="continue-payment">Continue to
+                    payment　→</button>
+            </div>
+            <div id="payment-state" class="checkout-state hidden"><button class="back-inline" id="back-fare">← Fare
+                    breakdown</button>
+                <h1 id="payment-heading">Pay with card</h1>
+                <p class="muted">Secure payment for your confirmed EcoRide trip.</p>
+                <form id="payment-form">
+                    <div id="card-fields"><label>Card number<input inputmode="numeric" id="card-number"
+                                placeholder="0000 0000 0000 0000" maxlength="19"></label>
+                        <div class="form-row"><label>Expiry date<input placeholder="MM / YY"
+                                    maxlength="7"></label><label>CVV<input inputmode="numeric" placeholder="123"
+                                    maxlength="3"></label></div><label>Name on card<input
+                                placeholder="Name on card"></label>
+                    </div>
+                    <div id="bank-fields" class="bank-box hidden"><strong>Pay by bank transfer</strong>
+                        <p>Transfer details will appear after continuing. Your receipt will update once the transfer is
+                            confirmed.</p>
+                    </div><button class="primary" type="submit">Pay</button>
+                </form><button class="text-button" id="switch-payment">Use bank transfer instead</button>
+            </div>
+            <div id="success-state" class="checkout-state hidden result">
+                <div class="result-icon">✓</div>
+                <h1>Payment successful!</h1>
+                <p>Your ride is complete. Here's your receipt.</p>
+                <hr>
+                <div class="receipt-head">
+                    <h2>Transaction receipt</h2><span>—</span>
+                </div>
+                <dl class="receipt">
+                    <dt>Date &amp; time</dt>
+                    <dd>—</dd>
+                    <dt>Payment method</dt>
+                    <dd id="receipt-method">—</dd>
+                    <dt>Reference</dt>
+                    <dd>—</dd>
+                </dl>
+                <h2>Fare breakdown</h2>
+                <div class="fee-lines"><span>Passenger fare <b>—</b></span><span>Service fee
+                        <b>—</b></span><span>Platform fee <b>—</b></span><span>Booking fee <b>—</b></span></div>
+                <div class="total-box"><b>Total paid</b><strong>—</strong></div>
+                <div class="preview-actions"><button class="outline" onclick="location.href='booking.html'">View trip
+                        details</button><button class="primary" onclick="location.href='index.html'">Back to
+                        home</button></div>
+            </div>
+            <div id="receipt-state" class="checkout-state hidden result">
+                <div class="result-icon">✓</div>
+                <h1>Payment received!</h1>
+                <p>Your bank transfer has been confirmed.</p>
+                <hr>
+                <div class="receipt-head">
+                    <h2>Transaction receipt</h2><span>—</span>
+                </div>
+                <dl class="receipt">
+                    <dt>Date &amp; time</dt>
+                    <dd>—</dd>
+                    <dt>Payment method</dt>
+                    <dd id="receipt-method-bank">Bank transfer</dd>
+                    <dt>Reference</dt>
+                    <dd>—</dd>
+                </dl>
+                <h2>Fare breakdown</h2>
+                <div class="fee-lines"><span>Passenger fare <b>—</b></span><span>Service fee
+                        <b>—</b></span><span>Platform fee <b>—</b></span><span>Booking fee <b>—</b></span></div>
+                <div class="total-box"><b>Total paid</b><strong>—</strong></div>
+                <div class="preview-actions"><button class="primary" id="download-receipt">Download
+                        receipt</button><button class="outline" onclick="location.href='index.html'">Back to
+                        home</button></div>
+            </div>
+            <div id="failed-state" class="checkout-state hidden result failed">
+                <div class="result-icon">×</div>
+                <h1>Payment failed</h1>
+                <p>We couldn't process your payment. No money was taken.</p>
+                <div class="error-box">Please check your payment details and try again. If the problem continues, use
+                    another payment method.</div><button class="primary" id="try-again">Try again</button><button
+                    class="outline wide" onclick="location.href='booking.html'">Back to trip</button>
+            </div>
+        </section>
+    </main>
+    <div class="toast" id="toast"></div>
+    <script src="app.js"></script>
+    <script src="checkout.js"></script>
+</body>
+
+</html>

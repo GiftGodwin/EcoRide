@@ -1,8 +1,124 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Payment | EcoRide</title><link rel="icon" href="images/favicon.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="booking.css"></head>
-<body data-page="checkout"><header class="app-header"><a class="brand" href="index.html"><img src="images/in%20app%20logo.svg" alt="EcoRide"></a><nav><a href="index.html">Home</a><a class="active" href="booking.html">Ride</a><a href="#wallet">Wallet</a><a href="#help">Help</a></nav><div class="header-user"><span class="avatar" aria-hidden="true"></span><span class="user-name"></span></div></header><div class="checkout-progress"><span class="active"><i>1</i>Fare breakdown</span><span><i>2</i>Payment method</span><span><i>3</i>Confirmation</span><span><i>4</i>Receipt</span></div>
-<main class="checkout-shell"><aside class="map-card"><div class="map-art"></div><div class="location"><b>⌖　Pickup location</b><small>—</small><b class="orange-text">⌖　Destination</b><small>—</small></div><div class="vehicle"><span>▱</span><div><b>Vehicle</b><small>—</small></div><strong>›</strong></div><div class="date">▣　 Schedule —</div></aside>
-<section class="checkout-card"><div id="fare-state" class="checkout-state"><h1>Fare breakdown</h1><div class="fare-line"><span class="person-icon">♙</span><div><b>Passenger fare</b><small>Base fare + distance + time</small></div><strong>—</strong></div><h2>EcoRide fees <small>ⓘ</small></h2><div class="fee-lines"><span>Service fee <b>—</b></span><span>Platform fee <b>—</b></span><span>Booking fee <b>—</b></span></div><div class="total-box"><b>Total amount</b><strong>—</strong><small>ⓘ　Ecoride fees help us maintain reliable service, support drivers and keep the platform running smoothly.</small></div><h2>Choose payment method</h2><label class="payment-option"><input type="radio" name="method" value="card"><i></i><span>▣</span><b>Card <small>(Visa, Mastercard, etc.)</small></b></label><label class="payment-option"><input type="radio" name="method" value="bank"><i></i><span>▥</span><b>Bank transfer <small>(Bank account / USSD)</small></b></label><button class="primary" id="continue-payment">Continue to payment　→</button></div>
-<div id="payment-state" class="checkout-state hidden"><button class="back-inline" id="back-fare">← Fare breakdown</button><h1 id="payment-heading">Pay with card</h1><p class="muted">Secure payment for your confirmed EcoRide trip.</p><form id="payment-form"><div id="card-fields"><label>Card number<input inputmode="numeric" id="card-number" placeholder="0000 0000 0000 0000" maxlength="19"></label><div class="form-row"><label>Expiry date<input placeholder="MM / YY" maxlength="7"></label><label>CVV<input inputmode="numeric" placeholder="123" maxlength="3"></label></div><label>Name on card<input placeholder="Name on card"></label></div><div id="bank-fields" class="bank-box hidden"><strong>Pay by bank transfer</strong><p>Transfer details will appear after continuing. Your receipt will update once the transfer is confirmed.</p></div><button class="primary" type="submit">Pay</button></form><button class="text-button" id="switch-payment">Use bank transfer instead</button></div>
-<div id="success-state" class="checkout-state hidden result"><div class="result-icon">✓</div><h1>Payment successful!</h1><p>Your ride is complete. Here's your receipt.</p><hr><div class="receipt-head"><h2>Transaction receipt</h2><span>—</span></div><dl class="receipt"><dt>Date &amp; time</dt><dd>—</dd><dt>Payment method</dt><dd id="receipt-method">—</dd><dt>Reference</dt><dd>—</dd></dl><h2>Fare breakdown</h2><div class="fee-lines"><span>Passenger fare <b>—</b></span><span>Service fee <b>—</b></span><span>Platform fee <b>—</b></span><span>Booking fee <b>—</b></span></div><div class="total-box"><b>Total paid</b><strong>—</strong></div><div class="preview-actions"><button class="outline" onclick="location.href='booking.html'">View trip details</button><button class="primary" onclick="location.href='index.html'">Back to home</button></div></div>
-<div id="failed-state" class="checkout-state hidden result failed"><div class="result-icon">×</div><h1>Payment failed</h1><p>We couldn't process your payment. No money was taken.</p><div class="error-box">Please check your payment details and try again. If the problem continues, use another payment method.</div><button class="primary" id="try-again">Try again</button><button class="outline wide" onclick="location.href='booking.html'">Back to trip</button></div></section></main><div class="toast" id="toast"></div><script src="app.js"></script><script src="checkout.js"></script></body></html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Book a ride | EcoRide</title>
+  <link rel="icon" href="images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="booking.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+</head>
+
+<body data-page="booking">
+  <header class="app-header"><a class="brand" href="index.html"><img src="images/in%20app%20logo.svg" alt="EcoRide"></a>
+    <nav><a class="active" href="booking.html">Book</a><a href="#trips">Trips</a><a href="recurring.html">Recurring
+        Commute</a><a href="#help">Help</a></nav>
+    <div class="header-user"><span class="avatar" aria-hidden="true"></span><span class="user-name"></span></div>
+  </header>
+  <main class="booking-shell">
+    <section class="ride-summary"><button class="back" type="button" aria-label="Go back" data-i="back"
+        onclick="history.back()"></button>
+      <h1>Shared Trip</h1>
+      <dl>
+        <dt>From</dt>
+        <dd>—</dd>
+        <dt>To</dt>
+        <dd>—</dd>
+      </dl><button class="map-trigger" id="expand-map" type="button">⌖ View trip map</button>
+      <div class="driver-card"><span class="driver-avatar">—</span>
+        <div><strong>Driver <span>—</span></strong><small>Vehicle details unavailable</small></div>
+      </div>
+      <div class="summary-row"><span>Price per seat</span><b>—</b></div>
+      <div class="summary-row"><span>Seats left</span><b>—</b></div>
+      <div class="seats-now">
+        <h2>Your seats right now</h2>
+        <div><b>Seat —</b><span>✓ Reserved</span></div>
+      </div>
+    </section>
+    <section class="booking-panel">
+      <div class="booking-progress"><span class="done">Choose seats</span><span>Request
+          sent</span><span>Confirmed</span></div>
+      <div id="choose-state" class="state">
+        <div class="choose-grid">
+          <div class="seat-map"><button class="seat wheel" disabled>Wheel<br><small>Driver</small></button><button
+              class="seat open">Seat 1<br><small>Available</small></button><button class="seat open">Seat
+              2<br><small>Available</small></button><button class="seat open">Seat
+              3<br><small>Available</small></button></div>
+          <div class="price-side">
+            <div><span>Selected seat</span><b id="seat-price">—</b></div>
+            <div><span>Service fee</span><b id="fee">—</b></div>
+            <div><span>Total fee</span><b id="total">—</b></div>
+          </div>
+        </div>
+        <label class="message-label floating-field" for="message"><textarea id="message" rows="2"
+            placeholder="Message to driver (optional)"></textarea><span class="floating-label">Message to driver
+            (optional)</span></label><button class="primary" id="request-seat" disabled>Request 1 seat</button><button
+          class="outline cancel-booking" id="cancel-booking" type="button">Cancel</button>
+      </div>
+      <div id="request-state" class="state hidden">
+        <h2>Waiting for driver</h2>
+        <h3>Request for Seat <span id="requested-seat">—</span></h3>
+        <div class="notice"><strong>Payment not taken</strong><span>Fare details will appear when the trip is
+            confirmed.</span></div>
+        <ol class="timeline">
+          <li class="complete"><i></i>
+            <div><strong>Request sent</strong><span>Selected seat</span></div>
+          </li>
+          <li><i></i>
+            <div><strong>Driver reviewing</strong><span>Waiting for response</span></div>
+          </li>
+          <li><i></i>
+            <div><strong>Booking confirmed</strong><span>You will be notified</span></div>
+          </li>
+        </ol><button class="outline wide" id="cancel-request">Cancel request</button>
+      </div>
+      <div id="confirmed-state" class="state hidden">
+        <div class="confirm-icon">✓</div>
+        <h2>Booking confirmed</h2>
+        <p>Your seat is reserved. You can now complete payment.</p>
+        <div class="notice"><strong>Seat reserved</strong><span>Trip and fare details will appear here.</span></div>
+        <button class="primary" id="pay-now">Continue to payment</button><button class="outline wide"
+          onclick="location.href='booking.html'">View trip</button>
+      </div>
+      <div id="reserved-state" class="state hidden">
+        <div class="reserved-banner"><span class="confirm-icon">✓</span>
+          <div><strong>Your seats are reserved</strong><small>Seat, date and driver confirmation appear here.</small>
+          </div>
+        </div>
+        <dl class="reserved-card">
+          <dt>Booking reference</dt>
+          <dd>—</dd>
+          <dt>Paid</dt>
+          <dd>—</dd>
+          <dt>Payment</dt>
+          <dd>—</dd>
+        </dl>
+        <p class="cancel-note">Free cancellation applies until the cut-off time shown on your confirmation.</p><button
+          class="primary" id="change-booking">Change booking</button><button class="outline wide"
+          id="cancel-reserved">Cancel booking</button>
+      </div>
+    </section>
+  </main>
+  <div class="map-overlay hidden" id="map-overlay" role="dialog" aria-modal="true" aria-labelledby="map-title">
+    <div class="map-modal">
+      <div class="map-modal-head">
+        <div><strong id="map-title">Trip map</strong><span>Trip route will appear here when available</span></div>
+        <button class="map-close" id="close-map" type="button" aria-label="Close map">×</button>
+      </div>
+      <div id="booking-map" class="booking-map"></div><button class="outline map-cancel" id="cancel-map"
+        type="button">Cancel</button>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="booking.js"></script>
+</body>
+
+</html>

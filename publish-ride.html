@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Publish ride | EcoRide</title>
+  <link rel="icon" href="images/favicon.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="pages.css">
+</head>
+<body class="">
+<div class="boxed tint">
+  <div class="boxed-top"><a href="index.html" aria-label="EcoRide home"><img src="images/in%20app%20logo.svg" alt="EcoRide"></a><a class="help" href="#"><i data-ic="help"></i>Help &amp; support</a></div>
+  <div class="frame">
+    <nav class="sidecard" aria-label="Main navigation"><a href="dashboard.html"><i data-ic="home"></i>Dashboard</a><a href="#"><i data-ic="car"></i>My Rides</a><a href="#"><i data-ic="card"></i>Payments</a><a href="#"><i data-ic="coins"></i>Earnings</a><a href="#"><i data-ic="wallet"></i>Wallet</a><a href="#"><i data-ic="user"></i>Profile</a><hr><a class="quiet" href="#"><i data-ic="settings"></i>Settings</a><a class="quiet" href="login.html" data-logout><i data-ic="logout"></i>Log out</a></nav>
+    <main class="panel">
+      <h1 style="font-size:30px">Publish Ride</h1>
+      <form id="publish-form" class="form-stack" autocomplete="off" novalidate>
+        <label for="p-from">From</label>
+        <div class="field"><i data-ic="pin"></i><input id="p-from" name="from" aria-label="From"></div>
+        <label for="p-to">To</label>
+        <div class="field"><i class="red" data-ic="pin"></i><input id="p-to" name="to" aria-label="To"></div>
+        <div class="lab">Date &amp; Time</div>
+        <div class="field dt"><i data-ic="calendar"></i><input type="date" name="date" aria-label="Date"><i data-ic="clock"></i><input type="time" name="time" aria-label="Time"></div>
+        <div class="row2">
+          <div><span class="lab">Available Seats</span><div class="stepper"><button type="button" data-step="-1" aria-label="Fewer seats">–</button><input name="seats" type="number" value="1" min="1" max="8" aria-label="Available seats"><button type="button" data-step="1" aria-label="More seats">+</button></div></div>
+          <div><span class="lab">Fare (per seat)</span><div class="money"><b>₦</b><input name="fare" type="number" min="0" step="50" inputmode="numeric" aria-label="Fare per seat"></div></div>
+        </div>
+        <button class="btn block submit-big" type="submit">Publish Ride</button>
+      </form>
+    </main>
+  </div>
+</div>
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script><script src="pages.js"></script>
+</body>
+</html>
