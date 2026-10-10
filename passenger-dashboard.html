@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Passenger dashboard | EcoRide</title>
+  <link rel="icon" href="images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="pages.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+</head>
+
+<body class="">
+  <div class="shell">
+    <aside class="side"><a class="brand" href="index.html" aria-label="EcoRide home"><img
+          src="images/in%20app%20logo.svg" alt="EcoRide"></a>
+      <nav aria-label="Main navigation"><a href="passenger-dashboard.html" class=active><i data-ic="search"></i>Find a
+          ride</a><a href="#"><i data-ic="clock"></i>My rides</a><a href="#"><i data-ic="users"></i>Carpool</a><a
+          href="#"><i data-ic="wallet"></i>Wallet</a><a href="#"><i data-ic="user"></i>Profile</a><a href="#"><i
+            data-ic="help"></i>Help</a></nav>
+      <p class="side-foot">Ride Safe,<br>Ride Eco<em>ride</em></p>
+    </aside>
+    <main class="main">
+      <header class="greet"><a class="mlogo" href="index.html"><img src="images/in%20app%20logo.svg" alt="EcoRide"></a>
+        <div>
+          <h1 data-greet>Good morning 👋</h1>
+          <p>Where are you headed today?</p>
+        </div>
+        <div class="tb-right"><button class="bell" type="button" aria-label="Notifications" data-ic="bell"></button>
+          <div class="header-user" hidden><span class="avatar" aria-hidden="true"></span><span class="user-name"></span>
+          </div>
+        </div>
+      </header>
+      <form class="searchbar" autocomplete="off" aria-label="Search for a ride">
+        <label class="sf from"><i class="pin" data-ic="pin"></i><span><small>From</small><input name="from"
+              aria-label="From" data-q="from" required></span></label>
+        <button class="swap" type="button" data-swap aria-label="Swap pickup and destination" data-ic="swap"></button>
+        <label class="sf to"><i class="pin red" data-ic="pin"></i><span><small>To</small><input name="to"
+              aria-label="To" data-q="to" required></span></label>
+        <label class="sf"><i data-ic="calendar"></i><span><small>Date</small><input type="date" name="date"
+              aria-label="Date" data-q="date"></span></label>
+        <label class="sf"><i data-ic="clock"></i><span><small>Time</small><input type="time" name="time"
+              aria-label="Time" data-q="time"></span></label>
+        <label class="sf"><i data-ic="user"></i><span><small>Passengers</small><select name="pax"
+              aria-label="Passengers" data-q="pax">
+              <option value="1">1 passenger</option>
+              <option value="2">2 passengers</option>
+              <option value="3">3 passengers</option>
+              <option value="4">4 passengers</option>
+            </select></span></label>
+        <button class="btn btn-search" type="submit"><i data-ic="search"></i>Search</button>
+      </form>
+      <section class="top4" aria-label="Overview">
+        <div class="promo">
+          <h2>Ride together.<br>Make a difference.</h2>
+          <p>Carpool, save money and enjoy your rides.</p><button class="btn sm" type="button"
+            data-focus="input[name=from]">Find a ride</button>
+        </div>
+        <article class="card stat"><span class="si"><i data-ic="car"></i></span><small>Upcoming
+            ride</small><strong>—</strong><span class="sub">— → —</span><a class="link" href="#">View details</a>
+        </article>
+        <article class="card stat"><span class="si"><i data-ic="wallet"></i></span><small>Total spent <em>(this
+              month)</em></small><strong>₦ —</strong><span class="sub">— rides</span><a class="link" href="#">View
+            wallet</a></article>
+        <article class="card stat"><span class="si"><i data-ic="leaf"></i></span><small>CO₂ saved <em>(this
+              month)</em></small><strong>— kg</strong><span class="sub">Based on your shared rides</span></article>
+      </section>
+      <div class="cols">
+        <section aria-labelledby="up-h">
+          <div class="sec-head">
+            <h2 id="up-h">Upcoming rides</h2><a class="link" href="#">View all <i data-ic="arrow"></i></a>
+          </div>
+          <div class="list">
+            <article class="urow">
+              <div class="udate"><span>—</span><b>—</b><span>—</span></div><span class="uavatar">—</span>
+              <div class="ubody"><span>— · — → —</span><b>—</b></div>
+              <div class="uend"><span>— passenger</span><b>₦ —</b></div><span class="chev"><i data-ic="chev"></i></span>
+            </article>
+          </div>
+        </section>
+        <section class="card" aria-labelledby="cm-h">
+          <div class="sec-head">
+            <h2 id="cm-h">Your commute</h2><a class="link" href="recurring.html">Edit</a>
+          </div>
+          <div class="commute-map" data-map role="img" aria-label="Commute map"></div>
+          <div class="kv2">
+            <div><i data-ic="pin"></i><span><b>—</b><small>Pickup location</small></span></div>
+            <div><i data-ic="pin"></i><span><b>—</b><small>Drop-off location</small></span></div>
+            <div><i data-ic="clock"></i><span><b>—</b><small>Departure time</small></span></div>
+            <div><i data-ic="user"></i><span><b>—</b><small>Seats needed</small></span></div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="pages.js"></script>
+</body>
+
+</html>

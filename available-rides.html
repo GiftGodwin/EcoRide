@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Available rides | EcoRide</title>
+  <link rel="icon" href="images/favicon.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="pages.css"><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+</head>
+<body class="">
+<div class="shell">
+  <aside class="side"><a class="brand" href="index.html" aria-label="EcoRide home"><img src="images/in%20app%20logo.svg" alt="EcoRide"></a><nav aria-label="Main navigation"><a href="passenger-dashboard.html" class=active><i data-ic="search"></i>Find a ride</a><a href="#"><i data-ic="clock"></i>My rides</a><a href="#"><i data-ic="users"></i>Carpool</a><a href="#"><i data-ic="wallet"></i>Wallet</a><a href="#"><i data-ic="user"></i>Profile</a><a href="#"><i data-ic="help"></i>Help</a></nav><p class="side-foot">Ride Safe,<br>Ride Eco<em>ride</em></p></aside>
+  <main class="main">
+    <header class="topbar has-side"><a class="mlogo" href="index.html"><img src="images/in%20app%20logo.svg" alt="EcoRide"></a><nav aria-label="Top navigation"><a href="index.html">Home</a><a href="passenger-dashboard.html" class=active>Find a ride</a><a href="#">My rides</a><a href="#">Wallet</a><a href="#">Help</a></nav><div class="tb-right"><button class="bell" type="button" aria-label="Notifications" data-ic="bell"></button><div class="header-user" hidden><span class="avatar" aria-hidden="true"></span><span class="user-name"></span></div></div></header>
+    <form class="searchbar" autocomplete="off" aria-label="Search for a ride">
+      <label class="sf from"><i class="pin" data-ic="pin"></i><span><small>From</small><input name="from" aria-label="From" data-q="from" required></span></label>
+      <button class="swap" type="button" data-swap aria-label="Swap pickup and destination" data-ic="swap"></button>
+      <label class="sf to"><i class="pin red" data-ic="pin"></i><span><small>To</small><input name="to" aria-label="To" data-q="to" required></span></label>
+      <label class="sf"><i data-ic="calendar"></i><span><small>Date</small><input type="date" name="date" aria-label="Date" data-q="date"></span></label>
+      <label class="sf"><i data-ic="clock"></i><span><small>Time</small><input type="time" name="time" aria-label="Time" data-q="time"></span></label>
+      <label class="sf"><i data-ic="user"></i><span><small>Passengers</small><select name="pax" aria-label="Passengers" data-q="pax"><option value="1">1 passenger</option><option value="2">2 passengers</option><option value="3">3 passengers</option><option value="4">4 passengers</option></select></span></label>
+      <button class="btn btn-search" type="submit"><i data-ic="search"></i>Search</button>
+    </form>
+    <section class="maprow" aria-label="Your commute">
+      <div class="mapcard"><span class="maplabel">ROUTE: — TO —</span><div data-map style="height:100%;min-height:176px" role="img" aria-label="Route map"></div></div>
+      <div class="infocard"><h2>Your commute</h2>
+        <div class="il"><i data-ic="pin"></i><span><b data-q="from">—</b><small>Pick up location</small></span></div>
+        <div class="il"><i class="red" data-ic="pin"></i><span><b data-q="to">—</b><small>Drop off location</small></span></div>
+        <div class="il"><i data-ic="calendar"></i><span><b><span data-q="date" data-fmt="date">—</span> · <span data-q="time" data-fmt="time">—</span></b><small>Departure time</small></span></div>
+        <div class="il"><i data-ic="user"></i><span><b data-q="pax" data-fmt="pax">—</b><small>Seats needed</small></span></div></div>
+      <div class="infocard"><h2>Ride type</h2><div class="rtype">
+        <button type="button" class="sel"><span class="dot"><i data-ic="check"></i></span><span><b>All rides</b><small>View all matching rides</small></span></button>
+        <button type="button"><span class="dot"><i data-ic="users"></i></span><span><b>Carpool</b><small>Share a ride and save</small></span></button>
+        <button type="button"><span class="dot"><i data-ic="car"></i></span><span><b>Private</b><small>Ride solo (if available)</small></span></button></div></div>
+    </section>
+    <div class="rhead"><h2>Available rides <small>— rides found</small></h2>
+      <div class="sortbar">Sort by <select aria-label="Sort by"><option>Best match</option><option>Lowest price</option><option>Earliest</option></select><button type="button">Filter <i data-ic="filter"></i></button></div></div>
+    <div class="rides"><article class="ride">
+        <div class="rd-d"><div class="rd-p"><span class="rd-av">—</span><div><b>—</b><small>★ — (— trips)</small><span class="vfy"><i data-ic="shield"></i>Verified</span></div></div>
+          <div class="rd-v"><span class="vth"><i data-ic="car"></i></span><div><b>—</b><small>— · — seats</small></div></div>
+          <div class="tags"><span class="tag fill">Carpool</span><span class="tag">↻ Recurring · —</span></div></div>
+        <div class="rd-r"><h3>— → —</h3><div class="tl"><div><b>—</b><span>— (Pickup)</span></div><div><b>—</b><span>— (Drop-off)</span></div></div>
+          <div class="meta"><span><i data-ic="clock"></i>— min</span><span><i data-ic="nav"></i>— km</span><span class="seats"><i data-ic="users"></i>— seats left</span></div><div class="note ok"><i data-ic="pin"></i><div><b>On your route</b>Route match details will appear here.</div></div></div>
+        <div class="rd-x"><div class="pc"><strong>₦ —</strong><br><small>per seat</small><br><small>Total ride contribution</small></div><a class="btn sm" href="driver-profile.html">View details</a><a class="btn sm outline" href="booking.html">Book ride</a></div>
+      </article></div>
+    <p class="muted" style="margin-top:14px">Can’t find what you need? <a href="no-match.html" data-keepq>See other options</a>.</p>
+  </main>
+</div>
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script src="pages.js"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Book a ride | EcoRide</title>
+  <link rel="icon" href="images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="booking.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+</head>
+
+<body data-page="booking">
+  <header class="app-header"><a class="brand" href="index.html"><img src="images/in%20app%20logo.svg" alt="EcoRide"></a>
+    <nav><a class="active" href="booking.html">Book</a><a href="#trips">Trips</a><a href="recurring.html">Recurring
+        Commute</a><a href="#help">Help</a></nav>
+    <div class="header-user"><span class="avatar" aria-hidden="true"></span><span class="user-name"></span></div>
+  </header>
+  <main class="booking-shell">
+    <section class="ride-summary"><button class="back" type="button" aria-label="Go back" data-i="back"
+        onclick="history.back()"></button>
+      <h1>Shared Trip</h1>
+      <dl>
+        <dt>From</dt>
+        <dd>—</dd>
+        <dt>To</dt>
+        <dd>—</dd>
+      </dl><button class="map-trigger" id="expand-map" type="button">⌖ View trip map</button>
+      <div class="driver-card"><span class="driver-avatar">—</span>
+        <div><strong>Driver <span>—</span></strong><small>Vehicle details unavailable</small></div>
+      </div>
+      <div class="summary-row"><span>Price per seat</span><b>—</b></div>
+      <div class="summary-row"><span>Seats left</span><b>—</b></div>
+      <div class="seats-now">
+        <h2>Your seats right now</h2>
+        <div><b>Seat —</b><span>✓ Reserved</span></div>
+      </div>
+    </section>
+    <section class="booking-panel">
+      <div class="booking-progress"><span class="done">Choose seats</span><span>Request
+          sent</span><span>Confirmed</span></div>
+      <div id="choose-state" class="state">
+        <div class="choose-grid">
+          <div class="seat-map"><button class="seat wheel" disabled>Wheel<br><small>Driver</small></button><button
+              class="seat open">Seat 1<br><small>Available</small></button><button class="seat open">Seat
+              2<br><small>Available</small></button><button class="seat open">Seat
+              3<br><small>Available</small></button></div>
+          <div class="price-side">
+            <div><span>Selected seat</span><b id="seat-price">—</b></div>
+            <div><span>Service fee</span><b id="fee">—</b></div>
+            <div><span>Total fee</span><b id="total">—</b></div>
+          </div>
+        </div>
+        <label class="message-label floating-field" for="message"><textarea id="message" rows="2"
+            placeholder="Message to driver (optional)"></textarea><span class="floating-label">Message to driver
+            (optional)</span></label><button class="primary" id="request-seat" disabled>Request 1 seat</button><button
+          class="outline cancel-booking" id="cancel-booking" type="button">Cancel</button>
+      </div>
+      <div id="request-state" class="state hidden">
+        <h2>Waiting for driver</h2>
+        <h3>Request for Seat <span id="requested-seat">—</span></h3>
+        <div class="notice"><strong>Payment not taken</strong><span>Fare details will appear when the trip is
+            confirmed.</span></div>
+        <ol class="timeline">
+          <li class="complete"><i></i>
+            <div><strong>Request sent</strong><span>Selected seat</span></div>
+          </li>
+          <li><i></i>
+            <div><strong>Driver reviewing</strong><span>Waiting for response</span></div>
+          </li>
+          <li><i></i>
+            <div><strong>Booking confirmed</strong><span>You will be notified</span></div>
+          </li>
+        </ol><button class="outline wide" id="cancel-request">Cancel request</button>
+      </div>
+      <div id="confirmed-state" class="state hidden">
+        <div class="confirm-icon">✓</div>
+        <h2>Booking confirmed</h2>
+        <p>Your seat is reserved. You can now complete payment.</p>
+        <div class="notice"><strong>Seat reserved</strong><span>Trip and fare details will appear here.</span></div>
+        <button class="primary" id="pay-now">Continue to payment</button><button class="outline wide"
+          onclick="location.href='booking.html'">View trip</button>
+      </div>
+      <div id="reserved-state" class="state hidden">
+        <div class="reserved-banner"><span class="confirm-icon">✓</span>
+          <div><strong>Your seats are reserved</strong><small>Seat, date and driver confirmation appear here.</small>
+          </div>
+        </div>
+        <dl class="reserved-card">
+          <dt>Booking reference</dt>
+          <dd>—</dd>
+          <dt>Paid</dt>
+          <dd>—</dd>
+          <dt>Payment</dt>
+          <dd>—</dd>
+        </dl>
+        <p class="cancel-note">Free cancellation applies until the cut-off time shown on your confirmation.</p><button
+          class="primary" id="change-booking">Change booking</button><button class="outline wide"
+          id="cancel-reserved">Cancel booking</button>
+      </div>
+    </section>
+  </main>
+  <div class="map-overlay hidden" id="map-overlay" role="dialog" aria-modal="true" aria-labelledby="map-title">
+    <div class="map-modal">
+      <div class="map-modal-head">
+        <div><strong id="map-title">Trip map</strong><span>Trip route will appear here when available</span></div>
+        <button class="map-close" id="close-map" type="button" aria-label="Close map">×</button>
+      </div>
+      <div id="booking-map" class="booking-map"></div><button class="outline map-cancel" id="cancel-map"
+        type="button">Cancel</button>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="booking.js"></script>
+</body>
+
+</html>
