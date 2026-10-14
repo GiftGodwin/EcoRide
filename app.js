@@ -3,6 +3,31 @@ const store = {
   get: (k) => localStorage.getItem("eco_" + k),
   set: (k, v) => localStorage.setItem("eco_" + k, v),
 };
+const AUTH_VERSION = "2";
+function clearSession() {
+  ["token", "role", "nin_verified", "name"].forEach((k) =>
+    localStorage.removeItem("eco_" + k),
+  );
+}
+function tokenUsable(t) {
+  try {
+    const p = JSON.parse(
+      atob(t.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")),
+    );
+    return !p.exp || p.exp * 1000 > Date.now();
+  } catch (_) {
+    return true;
+  }
+}
+
+(() => {
+  if (store.get("auth_v") !== AUTH_VERSION) {
+    clearSession();
+    store.set("auth_v", AUTH_VERSION);
+  }
+  const t = store.get("token");
+  if (t && !tokenUsable(t)) localStorage.removeItem("eco_token");
+})();
 const ICON = {
   back: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
   check:
@@ -55,11 +80,38 @@ async function api(path, { method = "GET", body, form } = {}) {
     });
     const d = await r.json().catch(() => null);
     if (!r.ok) console.error("[EcoRide API]", method, path, r.status, d);
-    if (!r.ok)
-      throw new Error(
+    const authCall = path.startsWith("/api/auth/");
+    if (r.status === 401 && !authCall) {
+      localStorage.removeItem("eco_token");
+      toast("Your session has expired. Please log in again.");
+      setTimeout(() => go("login.html"), 900);
+    }
+    const unverified =
+      r.status === 403 && d?.requiresEmailVerification === true;
+    if (unverified) {
+      localStorage.removeItem("eco_token");
+      const em = d.email || d.user?.email;
+      if (em) store.set("email", String(em).trim().toLowerCase());
+      if (!authCall) {
+        toast("Please verify your email to continue.");
+        setTimeout(
+          () => go(store.get("email") ? "otp.html" : "login.html"),
+          900,
+        );
+      }
+    }
+    if (!r.ok) {
+      const err = new Error(
         d?.message || d?.error || "Request failed (" + r.status + ")",
       );
-    if (d?.token) store.set("token", d.token);
+      err.status = r.status;
+      err.requiresEmailVerification = unverified;
+      throw err;
+    }
+    if (path === "/api/auth/login") {
+      const t = d?.token || d?.data?.token;
+      if (t) store.set("token", t);
+    }
     return d;
   } catch (e) {
     throw e instanceof TypeError

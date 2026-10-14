@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Earnings | EcoRide</title>
+    <link rel="icon" href="images/favicon.svg">
+    <link rel="stylesheet" href="pages.css">
+    <link rel="stylesheet" href="flow.css">
+</head>
+
+<body>
+    <div class="shell">
+        <aside class="side"><a class="brand" href="index.html"><img src="images/in%20app%20logo.svg" alt="EcoRide"></a>
+            <nav><a href="driver-dashboard.html"><i data-ic="home"></i>Home</a><a href="driver-dashboard.html"><i
+                        data-ic="car"></i>My Trips</a><a href="publish-ride.html"><i
+                        data-ic="calendar"></i>Schedule</a><a class="active" href="earnings.html"><i
+                        data-ic="wallet"></i>Earnings</a><a href="driver-profile.html"><i
+                        data-ic="user"></i>Profile</a><a href="safety-feedback.html"><i data-ic="help"></i>Help</a>
+            </nav>
+            <p class="side-foot">Ride Safe,<br>Ride Eco<em>ride</em></p>
+        </aside>
+        <main class="main">
+            <header class="greet"><a class="mlogo" href="index.html"><img src="images/in%20app%20logo.svg"
+                        alt="EcoRide"></a>
+                <div>
+                    <h1>Earnings</h1>
+                    <p>Track your completed trips and wallet balance.</p>
+                </div>
+                <div class="tb-right"><button class="bell" data-ic="bell" aria-label="Notifications"></button>
+                    <div class="header-user" hidden><span class="avatar"></span><span class="user-name"></span></div>
+                </div>
+            </header>
+            <section class="flow-main narrow flow-center">
+                <div class="flow-check">✓</div>
+                <h2 class="flow-title">Trip Completed</h2>
+                <p class="flow-sub">Your passenger has been successfully dropped off.</p>
+                <div class="flow-list">
+                    <div class="flow-row"><span>Earnings</span><b data-earnings>₦ —</b></div>
+                    <div class="flow-row"><span>Rating</span><b><span data-rating>—</span> <small>(<span
+                                    data-trips>—</span> trips)</small></b></div>
+                    <div class="flow-row"><span>Wallet balance</span><b data-wallet>₦ —</b></div>
+                </div><button class="flow-btn" id="wallet-link">View Wallet</button>
+                <p class="flow-foot">Earnings shown here are based on completed or paid bookings returned by the
+                    backend.</p>
+            </section>
+        </main>
+    </div>
+    <div class="toast" id="toast"></div>
+    <script src="app.js"></script>
+    <script src="services.js"></script>
+    <script src="pages.js"></script>
+    <script src="flow.js"></script>
+</body>
+
+</html>

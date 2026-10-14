@@ -1,0 +1,344 @@
+:root {
+    --flow-teal: #117f76;
+    --flow-ink: #293033;
+    --flow-muted: #778080;
+    --flow-line: #dfe5e4;
+    --flow-wash: #f7f9fa;
+    --flow-red: #c93232;
+    --flow-orange: #f39a22
+}
+
+.flow-main {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 54px 5vw 70px
+}
+
+.flow-main.narrow {
+    max-width: 760px
+}
+
+.flow-title {
+    font-size: 28px;
+    margin: 0 0 8px;
+    color: var(--flow-ink)
+}
+
+.flow-sub {
+    margin: 0 0 28px;
+    color: var(--flow-muted)
+}
+
+.flow-card {
+    background: #fff;
+    border: 1px solid var(--flow-line);
+    border-radius: 12px;
+    box-shadow: 0 2px 12px #173d3b0b;
+    overflow: hidden
+}
+
+.flow-map {
+    height: 285px;
+    background: linear-gradient(145deg, #eaf4ef, #dfeee7 52%, #b7e0f1);
+    position: relative;
+    overflow: hidden
+}
+
+.flow-map:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(25deg, transparent 45%, #fff8 46% 48%, transparent 49%), linear-gradient(115deg, transparent 42%, #fff8 43% 45%, transparent 46%);
+    background-size: 160px 110px, 190px 130px;
+    opacity: .8
+}
+
+.flow-route {
+    position: absolute;
+    left: 18%;
+    right: 20%;
+    top: 54%;
+    height: 5px;
+    background: var(--flow-teal);
+    transform: rotate(-14deg);
+    box-shadow: 0 0 0 18px #117f7626
+}
+
+.flow-pin {
+    position: absolute;
+    left: 18%;
+    top: 48%;
+    width: 20px;
+    height: 20px;
+    border: 5px solid #fff;
+    background: var(--flow-teal);
+    border-radius: 50%
+}
+
+.flow-car {
+    position: absolute;
+    right: 19%;
+    top: 34%;
+    font-size: 30px;
+    transform: rotate(-15deg)
+}
+
+.flow-map-label {
+    position: absolute;
+    top: 18%;
+    left: 13%;
+    font-weight: 700;
+    color: #29433e
+}
+
+.flow-map-label.right {
+    left: auto;
+    right: 12%;
+    top: 47%
+}
+
+.flow-pad {
+    padding: 26px
+}
+
+.flow-meta {
+    display: flex;
+    gap: 22px;
+    align-items: center;
+    flex-wrap: wrap
+}
+
+.flow-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #237e78;
+    color: white;
+    font-weight: 800
+}
+
+.flow-meta strong {
+    display: block
+}
+
+.flow-meta small {
+    display: block;
+    color: var(--flow-muted);
+    margin-top: 4px
+}
+
+.flow-actions {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-top: 24px
+}
+
+.flow-btn {
+    border: 1px solid var(--flow-teal);
+    border-radius: 8px;
+    padding: 12px 22px;
+    background: var(--flow-teal);
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center
+}
+
+.flow-btn.outline {
+    background: #fff;
+    color: var(--flow-teal)
+}
+
+.flow-btn.danger {
+    background: var(--flow-red);
+    border-color: var(--flow-red)
+}
+
+.flow-btn:disabled {
+    opacity: .55;
+    cursor: not-allowed
+}
+
+.flow-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--flow-line);
+    margin-top: 22px;
+    padding-top: 18px;
+    gap: 14px
+}
+
+.flow-info div {
+    padding-right: 14px;
+    border-right: 1px solid var(--flow-line)
+}
+
+.flow-info div:last-child {
+    border: 0
+}
+
+.flow-info small {
+    display: block;
+    color: var(--flow-muted);
+    margin-bottom: 5px
+}
+
+.flow-info b {
+    font-size: 15px
+}
+
+.flow-center {
+    text-align: center
+}
+
+.flow-check {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--flow-teal);
+    color: #fff;
+    font-size: 40px;
+    margin: 18px auto
+}
+
+.flow-list {
+    margin: 24px auto;
+    max-width: 540px;
+    border-top: 1px solid var(--flow-line)
+}
+
+.flow-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 17px 12px;
+    border-bottom: 1px solid var(--flow-line);
+    background: #fff
+}
+
+.flow-row span {
+    color: var(--flow-muted)
+}
+
+.flow-row b {
+    color: var(--flow-teal)
+}
+
+.flow-form {
+    display: grid;
+    gap: 10px;
+    text-align: left;
+    max-width: 620px;
+    margin: 0 auto
+}
+
+.flow-form label {
+    font-weight: 700;
+    margin-top: 8px
+}
+
+.flow-form textarea,
+.flow-form input,
+.flow-form select {
+    width: 100%;
+    border: 1px solid #c9d2d0;
+    border-radius: 8px;
+    padding: 13px;
+    font: inherit;
+    background: #fff
+}
+
+.stars {
+    display: flex;
+    gap: 8px
+}
+
+.stars button {
+    border: 0;
+    background: none;
+    color: #c9d2d0;
+    font-size: 34px;
+    cursor: pointer;
+    padding: 0
+}
+
+.stars button.on {
+    color: #f0a122
+}
+
+.incident-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px
+}
+
+.incident-grid button {
+    border: 1px solid #c9d2d0;
+    border-radius: 10px;
+    padding: 14px 8px;
+    background: #fff;
+    cursor: pointer
+}
+
+.incident-grid button.on {
+    border-color: var(--flow-teal);
+    background: #e9f7f4;
+    color: var(--flow-teal)
+}
+
+.flow-alert {
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin: 18px 0;
+    background: #fff5f5;
+    color: #8b2525;
+    display: none
+}
+
+.flow-alert.show {
+    display: block
+}
+
+.flow-foot {
+    color: var(--flow-muted);
+    font-size: 12px;
+    margin-top: 20px
+}
+
+@media(max-width:760px) {
+    .flow-main {
+        padding: 30px 18px
+    }
+
+    .flow-info {
+        grid-template-columns: 1fr
+    }
+
+    .flow-info div {
+        border-right: 0;
+        border-bottom: 1px solid var(--flow-line);
+        padding: 0 0 12px
+    }
+
+    .incident-grid {
+        grid-template-columns: repeat(2, 1fr)
+    }
+
+    .flow-actions {
+        flex-direction: column
+    }
+
+    .flow-btn {
+        width: 100%
+    }
+
+    .flow-map {
+        height: 230px
+    }
+}

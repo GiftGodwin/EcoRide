@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Request processing | EcoRide</title>
+  <link rel="icon" href="images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="booking-flow.css">
+</head>
+
+<body data-page="request-processing">
+  <header class="flow-header"><a class="flow-logo" href="index.html" aria-label="EcoRide home"><img
+        src="images/in%20app%20logo.svg" alt="EcoRide"></a>
+    <nav class="flow-nav" aria-label="Main navigation"><a href="passenger-dashboard.html">Home</a><a
+        href="available-rides.html" class="active">Ride</a><a href="dashboard.html">Wallet</a><a
+        href="safety-feedback.html">Help</a></nav>
+    <div class="flow-account"><span class="flow-avatar" id="flow-avatar" hidden></span><span class="flow-user-name"
+        id="flow-user-name"></span></div>
+  </header>
+  <div class="flow-back-wrap"><a class="flow-back" href="seat-request.html" id="flow-back"><svg viewBox="0 0 24 24"
+        aria-hidden="true">
+        <path d="m15 18-6-6 6-6" />
+      </svg>Back</a></div>
+  <main class="flow-progress" aria-live="polite"><img class="flow-car-art" src="images/car.png" alt="EcoRide car">
+    <div class="flow-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+    <h1 id="processing-title">Requesting your seat...</h1>
+    <p>We are checking seat availability for</p>
+    <p class="flow-route-label"><span id="rp-from">—</span>　→　<span id="rp-to">—</span></p>
+    <div class="flow-alert" id="rp-alert" hidden></div><button class="flow-outline" id="cancel-request" hidden
+      style="width:min(360px,100%);margin-top:18px">Cancel request</button>
+  </main>
+  <p class="flow-foot">Ride Safe,<br>Ride Eco<span>ride</span></p>
+  <div class="flow-toast" id="flow-toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+  <script src="services.js"></script>
+  <script src="booking-flow.js"></script>
+</body>
+
+</html>

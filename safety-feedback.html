@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Safety and feedback | EcoRide</title>
+    <link rel="icon" href="images/favicon.svg">
+    <link rel="stylesheet" href="pages.css">
+    <link rel="stylesheet" href="flow.css">
+</head>
+
+<body>
+    <div class="shell">
+        <aside class="side"><a class="brand" href="index.html"><img src="images/in%20app%20logo.svg" alt="EcoRide"></a>
+            <nav><a href="passenger-dashboard.html"><i data-ic="home"></i>Home</a><a href="available-rides.html"><i
+                        data-ic="car"></i>Find a ride</a><a href="dashboard.html"><i data-ic="wallet"></i>Wallet</a><a
+                    class="active" href="safety-feedback.html"><i data-ic="help"></i>Safety &amp; Feedback</a></nav>
+            <p class="side-foot">Ride Safe,<br>Ride Eco<em>ride</em></p>
+        </aside>
+        <main class="main">
+            <header class="greet"><a class="mlogo" href="index.html"><img src="images/in%20app logo.svg"
+                        alt="EcoRide"></a>
+                <div>
+                    <h1>Safety &amp; Feedback</h1>
+                    <p>Rate your ride or report an issue. Your safety matters.</p>
+                </div>
+                <div class="tb-right"><button class="bell" data-ic="bell" aria-label="Notifications"></button>
+                    <div class="header-user" hidden><span class="avatar"></span><span class="user-name"></span></div>
+                </div>
+            </header>
+            <section class="flow-main">
+                <div class="flow-info" style="margin:0 0 24px">
+                    <div><small>Driver</small><b data-driver>—</b></div>
+                    <div><small>Vehicle</small><b data-vehicle>—</b></div>
+                    <div><small>Trip</small><b data-when>—</b></div>
+                </div>
+                <div class="flow-card" style="padding:26px">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:34px">
+                        <form class="flow-form" id="rating-form">
+                            <h2 class="flow-title">Rate your ride</h2>
+                            <p class="flow-sub"><span data-driver>—</span> · <span data-vehicle>—</span></p>
+                            <div class="stars" aria-label="Rating"><button type="button">★</button><button
+                                    type="button">★</button><button type="button">★</button><button
+                                    type="button">★</button><button type="button">★</button></div><label
+                                for="review">Tell us more (optional)</label><textarea id="review" maxlength="1000"
+                                rows="5"
+                                placeholder="Share your experience, comments or suggestions..."></textarea><button
+                                class="flow-btn" id="rating-submit" type="submit">Submit rating</button>
+                        </form>
+                        <form class="flow-form" id="incident-form">
+                            <h2 class="flow-title">Report an incident</h2>
+                            <p class="flow-sub">What happened?</p>
+                            <div class="incident-grid"><button type="button"
+                                    data-type="accident">Accident</button><button type="button"
+                                    data-type="harassment">Harassment</button><button type="button"
+                                    data-type="vehicle_issue">Vehicle issue</button><button type="button"
+                                    data-type="other">Other</button></div><label for="incident-description">Tell us
+                                more</label><textarea id="incident-description" maxlength="1000" rows="5"
+                                placeholder="Tell us what happened"></textarea><button class="flow-btn"
+                                id="incident-submit" type="submit">Submit report</button>
+                        </form>
+                    </div>
+                    <p class="flow-foot">Reports are sent to EcoRide using the active trip session when one is
+                        available.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+    <div class="toast" id="toast"></div>
+    <script src="app.js"></script>
+    <script src="services.js"></script>
+    <script src="pages.js"></script>
+    <script src="flow.js"></script>
+</body>
+
+</html>

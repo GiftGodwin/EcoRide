@@ -156,7 +156,12 @@
 
         // remember the last identifier (never the password)
         const saved = store.get('login_id');
-        if (saved) { if (saved.startsWith('+234')) { setMode('phone'); $('phone').value = saved.slice(4).replace(/(\d{3})(\d{3})(\d+)/, '$1 $2 $3') } else $('email').value = saved; $('remember').checked = true; sync() }
+        const justVerified = store.get('verified_email');
+        if (justVerified) {
+            localStorage.removeItem('eco_verified_email');
+            setMode('email'); $('email').value = justVerified; sync();
+            toast('Email verified. Please log in.');
+        } else if (saved) { if (saved.startsWith('+234')) { setMode('phone'); $('phone').value = saved.slice(4).replace(/(\d{3})(\d{3})(\d+)/, '$1 $2 $3') } else $('email').value = saved; $('remember').checked = true; sync() }
 
         $('form').onsubmit = e => {
             e.preventDefault();
@@ -165,9 +170,11 @@
             const id = mode === 'email' ? $('email').value.trim().toLowerCase() : '+234' + nat($('phone').value);
             const body = { password: $('password').value };
             body[mode] = id;
+            if (mode === 'phone') localStorage.removeItem('eco_email');
             busy(nx, async () => {
                 try {
                     const d = await api('/api/auth/login', { method: 'POST', body });
+                    if (!store.get('token')) throw new Error('Login failed. Please try again.');
                     const account = d?.user || d?.data?.user || d?.data || d;
                     const displayName = account?.firstName || account?.first_name || account?.name || account?.fullName || account?.email || account?.phone || id;
                     if (displayName) store.set('name', displayName);
@@ -176,12 +183,20 @@
                     if (d?.role || d?.user?.role) store.set('role', role);
                     const verified = d?.verified ?? d?.user?.verified;
                     if (verified === false) go('nin.html');
-                    else go(homeFor(role));
-                } catch (err) { toast(err.message) }
+                    else go(role ? homeFor(role) : 'role.html');
+                } catch (err) {
+                    if (err.requiresEmailVerification) {
+                        if (mode === 'email') { store.set('email', id); localStorage.removeItem('eco_phone'); }
+                        if (store.get('email')) { toast('Please verify your email to continue.'); setTimeout(() => go('otp.html'), 900); }
+                        else toast('Your email is not verified yet. Log in with your email address to verify it.');
+                        return;
+                    }
+                    toast(err.message);
+                }
             });
         };
 
-        $(mode).focus();
+        $(justVerified ? 'password' : mode).focus();
     </script>
 </body>
 

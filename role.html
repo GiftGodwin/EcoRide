@@ -26,17 +26,11 @@
     </main>
     <script src="app.js"></script>
     <script>
-        document.querySelectorAll('[data-role]').forEach(b => b.onclick = () => busy(b, async () => {
-            const email = (store.get('email') || '').trim().toLowerCase();
-            if (!email) { toast('OTP verification requires the email sign-up option.'); return; }
-            try {
-                await api('/api/auth/send-otp', { method: 'POST', body: { email } });
-                store.set('role', b.dataset.role);
-                store.set('otp_sent_at', String(Date.now()));
-                store.set('otp_sent_to', email);
-                go('otp.html');
-            } catch (error) { toast(error.message); }
-        }));
+        // Role is chosen after identity verification, then the user lands on their dashboard.
+        document.querySelectorAll('[data-role]').forEach(b => b.onclick = () => {
+            store.set('role', b.dataset.role);
+            go(homeFor(b.dataset.role));
+        });
     </script>
 </body>
 

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Passenger accepted | EcoRide</title>
+  <link rel="icon" href="images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="pages.css">
+</head>
+
+<body>
+  <div class="boxed tint">
+    <div class="boxed-top"><a href="index.html" aria-label="EcoRide home"><img src="images/in%20app%20logo.svg"
+          alt="EcoRide"></a><a class="help" href="#"><i data-ic="help"></i>Help &amp; support</a></div>
+    <div class="frame">
+      <nav class="sidecard" aria-label="Main navigation"><a href="driver-dashboard.html"><i
+            data-ic="home"></i>Dashboard</a><a href="#"><i data-ic="car"></i>My Rides</a><a class="active" href="#"><i
+            data-ic="card"></i>Payments</a><a href="#"><i data-ic="coins"></i>Earnings</a><a href="#"><i
+            data-ic="user"></i>Profile</a>
+        <hr><a class="quiet" href="#"><i data-ic="settings"></i>Settings</a><a class="quiet" href="login.html"
+          data-logout><i data-ic="logout"></i>Log out</a>
+      </nav>
+      <main class="panel acc" data-page="passenger-accepted">
+        <span class="acc-ring" aria-hidden="true"><i data-ic="check"></i></span>
+        <h1>Passenger Accepted!</h1>
+        <p class="acc-sub">Your seat No. <b id="ac-seat-n">—</b> has been reserved.</p>
+        <div class="acc-card">
+          <div class="acc-row"><i data-ic="car"></i><span id="ac-from">—</span><i class="acc-arrow"
+              data-ic="arrow"></i><span id="ac-to">—</span></div>
+          <div class="acc-row"><i data-ic="calendar"></i><span id="ac-when">—</span></div>
+          <div class="acc-row dark"><i data-ic="user"></i><b>Seat No <span id="ac-seat">—</span></b><small
+              id="ac-seat-note" hidden>( Front passenger)</small></div>
+          <div class="acc-row"><i data-ic="users"></i><b>Passenger:</b><span id="ac-pax">—</span></div>
+          <div class="acc-id">Booking ID: <span id="ac-id">—</span><button type="button" id="ac-copy"
+              aria-label="Copy booking ID"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="8" y="8" width="12" height="13" rx="2.5" />
+                <path d="M16 8V5.5A1.5 1.5 0 0014.500 4h-8A1.500 1.500 0 005 5.500v10A1.500 1.500 0 006.500 17H8" />
+              </svg></button></div>
+        </div>
+        <button class="btn block" id="ac-trip" type="button">View Trip Details</button>
+        <button class="btn block orange-outline" id="ac-done" type="button">Done</button>
+      </main>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+  <script src="services.js"></script>
+  <script src="pages.js"></script>
+  <script src="connect.js"></script>
+</body>
+
+</html>

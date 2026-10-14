@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>SOS emergency help | EcoRide</title>
+    <link rel="icon" href="images/favicon.svg">
+    <link rel="stylesheet" href="pages.css">
+    <link rel="stylesheet" href="flow.css">
+</head>
+
+<body>
+    <div class="shell">
+        <aside class="side"><a class="brand" href="index.html"><img src="images/in%20app%20logo.svg" alt="EcoRide"></a>
+            <nav><a href="passenger-dashboard.html"><i data-ic="home"></i>Home</a><a href="live-trip.html"
+                    class="active"><i data-ic="car"></i>My Rides</a><a href="dashboard.html"><i
+                        data-ic="wallet"></i>Wallet</a><a href="safety-feedback.html"><i data-ic="help"></i>Help</a>
+            </nav>
+            <p class="side-foot">Ride Safe,<br>Ride Eco<em>ride</em></p>
+        </aside>
+        <main class="main">
+            <header class="greet"><a class="mlogo" href="index.html"><img src="images/in%20app%20logo.svg"
+                        alt="EcoRide"></a>
+                <div>
+                    <h1>Trip safety</h1>
+                    <p>Emergency support for your active trip.</p>
+                </div>
+                <div class="tb-right"><button class="bell" data-ic="bell" aria-label="Notifications"></button>
+                    <div class="header-user" hidden><span class="avatar"></span><span class="user-name"></span></div>
+                </div>
+            </header>
+            <section class="flow-main narrow">
+                <article class="flow-card">
+                    <div class="flow-map"><span class="flow-map-label" data-pickup>Pickup location</span><span
+                            class="flow-map-label right" data-to>Destination</span><span class="flow-route"></span><span
+                            class="flow-pin"></span><span class="flow-car">▰</span></div>
+                    <div class="flow-pad">
+                        <div class="flow-meta"><span class="flow-avatar" data-driver>—</span>
+                            <div><strong data-driver>—</strong><small><span data-vehicle>—</span> · <span
+                                        data-plate>—</span></small></div>
+                        </div>
+                        <p class="flow-sub">If you are in immediate danger, contact local emergency services first.</p>
+                        <div class="flow-actions"><a class="flow-btn danger" href="sos-options.html">SOS · Tap for
+                                Emergency</a><a class="flow-btn outline" href="live-trip.html">Back to trip</a></div>
+                    </div>
+                </article>
+            </section>
+        </main>
+    </div>
+    <div class="toast" id="toast"></div>
+    <script src="app.js"></script>
+    <script src="services.js"></script>
+    <script src="pages.js"></script>
+    <script src="flow.js"></script>
+</body>
+
+</html>

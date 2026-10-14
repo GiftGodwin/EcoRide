@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Booking accepted | EcoRide</title>
+  <link rel="icon" href="images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="booking-flow.css">
+</head>
+
+<body data-page="booking-confirmation">
+  <header class="flow-header"><a class="flow-logo" href="index.html" aria-label="EcoRide home"><img
+        src="images/in%20app%20logo.svg" alt="EcoRide"></a>
+    <nav class="flow-nav" aria-label="Main navigation"><a href="passenger-dashboard.html">Home</a><a
+        href="available-rides.html" class="active">Ride</a><a href="dashboard.html">Wallet</a><a
+        href="safety-feedback.html">Help</a></nav>
+    <div class="flow-account"><span class="flow-avatar" id="flow-avatar" hidden></span><span class="flow-user-name"
+        id="flow-user-name"></span></div>
+  </header>
+  <div class="flow-back-wrap"><a class="flow-back" href="request-processing.html" id="flow-back"><svg
+        viewBox="0 0 24 24" aria-hidden="true">
+        <path d="m15 18-6-6 6-6" />
+      </svg>Back</a></div>
+  <main class="flow-main">
+    <div class="flow-result-head"><span class="flow-success" aria-hidden="true">✓</span>
+      <h1>Booking Accepted!</h1>
+      <p id="bc-subtitle">The driver accepted your booking request.</p>
+    </div>
+    <section class="flow-confirm-card" aria-label="Booking summary">
+      <div class="flow-confirm-row"><svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 15l2-6h12l2 6M3 15h18v5H3zM6 20v1M18 20v1" />
+          <circle cx="7" cy="17" r="1" />
+          <circle cx="17" cy="17" r="1" />
+        </svg><span id="bc-route">— → —</span></div>
+      <div class="flow-confirm-row"><svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="16" rx="2" />
+          <path d="M16 3v4M8 3v4M3 10h18" />
+        </svg><span id="bc-date">—</span></div>
+      <div class="flow-confirm-row"><svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 3h3l2 11H6L5 3Zm3 11h9a3 3 0 0 1 3 3v3H9v-3a3 3 0 0 1 3-3" />
+        </svg><span id="bc-seat">Seat preference: —</span></div>
+      <div class="flow-confirm-row"><svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="7" r="4" />
+          <path d="M4 21v-2a8 8 0 0 1 16 0v2Z" />
+        </svg><span id="bc-passenger">Passenger: —</span></div>
+      <div class="flow-confirm-id">Booking ID: <strong id="bc-id">—</strong><button type="button" id="copy-booking"
+          aria-label="Copy booking ID"><svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="8" y="8" width="12" height="13" rx="2" />
+            <path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-8A1.5 1.5 0 0 0 5 5.5v10A1.5 1.5 0 0 0 6.5 17H8" />
+          </svg></button></div>
+    </section>
+    <div class="flow-actions"><a class="flow-primary" id="view-booking" href="passenger-dashboard.html">View
+        Booking</a><a class="flow-outline" href="passenger-dashboard.html">Done</a></div>
+  </main>
+  <p class="flow-foot">Ride Safe,<br>Ride Eco<span>ride</span></p>
+  <div class="flow-toast" id="flow-toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+  <script src="services.js"></script>
+  <script src="booking-flow.js"></script>
+</body>
+
+</html>

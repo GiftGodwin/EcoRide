@@ -285,21 +285,52 @@
   };
   // Do not preload a saved commute here. The form must open empty; saved data is only
   // written after the user explicitly completes this form.
+  const DAY_NAMES = {
+    Mon: "monday",
+    Tue: "tuesday",
+    Wed: "wednesday",
+    Thu: "thursday",
+    Fri: "friday",
+    Sat: "saturday",
+    Sun: "sunday",
+  };
+  const place = (field, key) => ({
+    name: $(field).value.trim(),
+    latitude: points[key][0],
+    longitude: points[key][1],
+  });
   $("commute-form").onsubmit = (event) => {
     event.preventDefault();
     if (!days().length) {
       toastMessage("Select at least one commute day.");
       return;
     }
-    const body = {
-      from: $("from").value.trim(),
-      to: $("to").value.trim(),
-      pickupPoint: $("pickup").value.trim(),
-      days: days(),
-      departureTime: $("departure-time").value,
-    };
     busy($("save"), async () => {
       try {
+        for (const [field, key] of [
+          ["from", "from"],
+          ["to", "to"],
+          ["pickup", "pickup"],
+        ])
+          if (!points[key]) await geocode(field, key);
+        if (!points.from || !points.to || !points.pickup) {
+          toastMessage(
+            "We could not locate one of your places. Try a more specific address or pick it on the map.",
+          );
+          return;
+        }
+        const body = {
+          route: {
+            origin: place("from", "from"),
+            destination: place("to", "to"),
+          },
+          schedule: {
+            days: days().map((d) => DAY_NAMES[d]),
+            departureTime: $("departure-time").value,
+          },
+          pickupPoints: [place("pickup", "pickup")],
+          preferences: { seatsNeeded: 1 },
+        };
         await api("/api/recurring-commutes", { method: "POST", body });
         toastMessage("Recurring commute saved.");
       } catch (error) {

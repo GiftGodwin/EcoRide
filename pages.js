@@ -243,7 +243,7 @@
   document.querySelectorAll("[data-logout]").forEach((a) =>
     a.addEventListener("click", (ev) => {
       ev.preventDefault();
-      localStorage.removeItem("eco_token");
+      clearSession();
       go("login.html");
     }),
   );

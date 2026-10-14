@@ -155,11 +155,12 @@
             busy(nx, async () => {
                 try {
                     await api('/api/auth/register', { method: 'POST', body });
+                    clearSession();
                     localStorage.removeItem('eco_otp_sent_at'); localStorage.removeItem('eco_otp_sent_to');
                     store.set('name', body.firstName);
                     if (mode === 'email') { store.set('email', body.email); localStorage.removeItem('eco_phone') }
                     else { store.set('phone', body.phone); localStorage.removeItem('eco_email') }
-                    go('role.html');
+                    go('otp.html');
                 } catch (err) { toast(err.message) }
             });
         };
