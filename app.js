@@ -108,10 +108,8 @@ async function api(path, { method = "GET", body, form } = {}) {
       err.requiresEmailVerification = unverified;
       throw err;
     }
-    if (path === "/api/auth/login") {
-      const t = d?.token || d?.data?.token;
-      if (t) store.set("token", t);
-    }
+    const sessionToken = d?.token || d?.data?.token;
+    if (sessionToken) store.set("token", sessionToken);
     return d;
   } catch (e) {
     throw e instanceof TypeError

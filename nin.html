@@ -27,12 +27,11 @@
     <script>
         const n = document.getElementById('nin'), nx = document.getElementById('next');
         n.focus();
-        n.oninput = () => { nx.disabled = n.value.trim().length === 0 };
+        n.inputMode = 'numeric';
+        n.oninput = () => { n.value = n.value.replace(/\D/g, '').slice(0, 11); nx.disabled = n.value.length !== 11 };
         n.onkeydown = e => { if (e.key === 'Enter' && !nx.disabled) nx.click() };
-        nx.onclick = () => { if (!nx.disabled) go('face.html') };
+        nx.onclick = () => { if (n.value.length === 11) go('face.html') };
     </script>
-    <script src="services.js"></script>
-    <script src="connect.js"></script>
 </body>
 
 </html>

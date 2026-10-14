@@ -128,7 +128,7 @@
         verifyButton.onclick = () => {
             if (verified) {
                 clearTimeout(nextTimer);
-                go('login.html');
+                go('nin.html');
                 return;
             }
             if (code().length !== 6) return;
@@ -146,7 +146,6 @@
                         body: { email, otp: code() }
                     });
                     verified = true;
-                    localStorage.removeItem('eco_token');
                     localStorage.removeItem('eco_otp_sent_at');
                     localStorage.removeItem('eco_otp_sent_to');
                     store.set('verified_email', email);
@@ -154,13 +153,13 @@
                     box.style.display = 'none';
                     document.querySelector('.side h1').textContent = 'Verification successful';
                     const sub = document.getElementById('sub');
-                    sub.textContent = 'Your email has been verified. Continuing to log in…';
+                    sub.textContent = 'Your email has been verified. Continue to NIN verification.';
                     sub.style.color = 'var(--teal)';
                     sub.style.fontWeight = '600';
                     verifyButton.textContent = 'Continue';
                     verifyButton.disabled = false;
                     toast('OTP verified successfully.');
-                    nextTimer = setTimeout(() => go('login.html'), 1600);
+                    nextTimer = setTimeout(() => go('nin.html'), 1600);
                 } catch (error) {
                     box.classList.add('err');
                     toast(error.message);
