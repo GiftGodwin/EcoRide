@@ -31,6 +31,7 @@
     "seat-request",
     "request-processing",
     "booking-confirmation",
+    "trusted-commute",
   ];
   if (guarded.includes(page) && !E.requireAuth()) return;
 
@@ -1008,6 +1009,122 @@
       set($("ac-pax"), b.passengerName);
       set($("ac-id"), "#" + (b.reference || b.id));
     },
+    async "trusted-commute"() {
+      const cards = $("tc-cards"),
+        tpl = $("tc-card"),
+        poolBox = $("tc-pools"),
+        poolState = $("tc-pool-state"),
+        f = { from: $("tc-from"), to: $("tc-to"), date: $("tc-date"), time: $("tc-time"), pax: $("tc-pax") },
+        state = (html) => (cards.innerHTML = `<p class="state">${html}</p>`);
+      let commute = null,
+        rides = [];
+      f.date.value = new Date().toISOString().slice(0, 10);
+
+      const draw = () => {
+        const pax = +f.pax.value || 1,
+          want = (k) => f[k].value.trim().toLowerCase(),
+          changed = (k) => want(k) && want(k) !== String(E.str(commute?.[k]) || "").toLowerCase(),
+          list = rides.filter(
+            (r) =>
+              (r.seatsLeft == null || isNaN(+r.seatsLeft) || +r.seatsLeft >= pax) &&
+              (!changed("from") || `${r.from || ""} ${r.pickupName || ""}`.toLowerCase().includes(want("from"))) &&
+              (!changed("to") || String(r.to || "").toLowerCase().includes(want("to"))),
+          );
+        cards.innerHTML = "";
+        if (!list.length)
+          return state("<b>No groups found</b>Try a different route, time or number of passengers.");
+        list.forEach((r) => {
+          const c = tpl.content.firstElementChild.cloneNode(true),
+            q = (s) => c.querySelector(s),
+            car = [r.vehicleName, r.colour].filter(Boolean).join(" · ");
+          set(q(".av"), E.initials(r.driverName));
+          set(q(".nm"), r.driverName || "Verified driver");
+          set(q(".rv"), `${r.rating ?? "—"} (${r.trips ?? "—"} trips)`);
+          set(q(".car"), [car, r.seatsTotal ? r.seatsTotal + " seats" : null].filter(Boolean).join(" · ") || "—");
+          set(q(".pr"), E.naira(r.price));
+          set(q(".seats"), r.seatsLeft != null ? `${r.seatsLeft} seat${+r.seatsLeft === 1 ? "" : "s"} left` : "");
+          if (r.seatsLeft == null) q(".seats").hidden = true;
+          set(q(".pk"), r.pickupName || r.from || "—");
+          set(q(".pt"), E.fmtTime(r.pickupTime));
+          set(q(".dk"), r.to || "—");
+          set(q(".dt"), E.fmtTime(r.dropoffTime));
+          set(q(".cn"), r.vehicleName || "Vehicle");
+          set(q(".rd"), r.days?.length ? "Recurring (" + E.dayLabel(r.days).replace(/ /g, "") + ")" : "Recurring");
+          const btn = q(".join");
+          btn.addEventListener("click", async () => {
+            const id = r.poolId || r.id;
+            if (!id) return toast("This group can't be joined right now.");
+            btn.disabled = true;
+            try {
+              await E.joinPool(id);
+              toast("You've joined the group.");
+              btn.firstChild.textContent = "Joined";
+              loadPools();
+            } catch (e) {
+              toast(e.message);
+              btn.disabled = false;
+            }
+          });
+          cards.append(c);
+        });
+      };
+
+      const loadPools = async () => {
+        const pools = await quiet(E.getPools());
+        poolBox.querySelectorAll(".pool-row").forEach((n) => n.remove());
+        if (!pools) return set(poolState, "Could not load your pools.");
+        poolState.hidden = !!pools.length;
+        if (!pools.length) return set(poolState, "You haven't joined a commute group yet.");
+        pools.slice(0, 3).forEach((p) => {
+          const row = document.createElement("div");
+          row.className = "pool-row";
+          row.innerHTML =
+            '<div class="pr-route"><svg><use href="#i-pin"/></svg><span><b class="a"></b><br><span class="status"></span></span></div>' +
+            '<div class="pr-days"><svg><use href="#i-cal"/></svg><span class="d"></span></div>' +
+            '<div class="pr-time"><svg><use href="#i-clock"/></svg><span><b class="t"></b><small>Departure time</small></span></div>' +
+            '<a class="outline" href="recurring.html">View Details<svg><use href="#i-arrow"/></svg></a>';
+          const q = (s) => row.querySelector(s);
+          q(".a").textContent = `${p.from || "—"} → ${p.to || "—"}`;
+          q(".status").textContent = p.status.charAt(0).toUpperCase() + p.status.slice(1);
+          q(".d").textContent = E.dayLabel(p.days) || "—";
+          q(".t").textContent = E.fmtTime(p.departureTime);
+          poolBox.append(row);
+        });
+      };
+      loadPools();
+
+      $("tc-swap").addEventListener("click", () => {
+        [f.from.value, f.to.value] = [f.to.value, f.from.value];
+      });
+      $("tc-search").addEventListener("submit", (e) => {
+        e.preventDefault();
+        draw();
+      });
+
+      let list;
+      try {
+        list = E.asList(await E.getCommutes());
+      } catch (e) {
+        return state(`<b>Could not load groups</b>${e.message}`);
+      }
+      commute = list.find((x) => String(E.pick(x, ["id", "_id"])) === qs.get("commute")) || list[0];
+      if (!commute)
+        return state(
+          '<b>Save your commute to see matching groups</b>We match you with verified commuters on your route and schedule.<br><a class="btn" href="recurring.html">Set up recurring commute</a>',
+        );
+      f.from.value = E.str(commute.from) || "";
+      f.to.value = E.str(commute.to) || "";
+      const t = String(commute.departureTime || "");
+      if (/^\d{2}:\d{2}/.test(t)) f.time.value = t.slice(0, 5);
+      try {
+        rides = E.asList(await E.getMatches(E.pick(commute, ["id", "_id"]))).map(E.ride);
+      } catch (e) {
+        return state(`<b>Could not load groups</b>${e.message}`);
+      }
+      E.cacheRides(rides);
+      draw();
+    },
+
   };
 
   const fn = pages[page];

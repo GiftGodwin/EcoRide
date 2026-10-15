@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Trusted recurring commute | EcoRide</title>
+  <link rel="icon" href="images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="trusted-commute.css">
+</head>
+
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-pin" viewBox="0 0 24 24">
+        <path d="M12 21s-6.5-5.8-6.5-11a6.5 6.5 0 0113 0c0 5.2-6.5 11-6.5 11z" fill="none" stroke="currentColor"
+          stroke-width="1.8" stroke-linejoin="round" />
+        <circle cx="12" cy="10" r="2.3" fill="none" stroke="currentColor" stroke-width="1.8" />
+      </symbol>
+      <symbol id="i-cal" viewBox="0 0 24 24">
+        <rect x="4" y="5" width="16" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8" />
+        <path d="M4 10h16M9 3v4M15 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+      </symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8" />
+        <path d="M12 7.500V12l3 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+      </symbol>
+      <symbol id="i-user" viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="3.8" fill="none" stroke="currentColor" stroke-width="1.8" />
+        <path d="M4.5 20.500c.9-3.8 3.8-5.8 7.5-5.800s6.6 2 7.5 5.8" fill="none" stroke="currentColor"
+          stroke-width="1.8" stroke-linecap="round" />
+      </symbol>
+      <symbol id="i-users" viewBox="0 0 24 24">
+        <circle cx="12" cy="7.5" r="3" fill="none" stroke="currentColor" stroke-width="1.7" />
+        <circle cx="5.5" cy="10" r="2.4" fill="none" stroke="currentColor" stroke-width="1.7" />
+        <circle cx="18.5" cy="10" r="2.4" fill="none" stroke="currentColor" stroke-width="1.7" />
+        <path
+          d="M6.5 20c.5-3.4 2.5-5 5.5-5s5 1.6 5.5 5M1.5 18.500c.3-2.3 1.7-3.7 4-3.700M22.5 18.500c-.3-2.3-1.7-3.7-4-3.7"
+          fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+      </symbol>
+      <symbol id="i-search" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2" />
+        <path d="M20 20l-4.2-4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      </symbol>
+      <symbol id="i-swap" viewBox="0 0 24 24">
+        <path d="M5 9h13l-3.5-3.500M19 15H6l3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.9"
+          stroke-linecap="round" stroke-linejoin="round" />
+      </symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24">
+        <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </symbol>
+      <symbol id="i-badge" viewBox="0 0 24 24">
+        <path
+          d="M12 2.500l2.6 1.9 3.2-.1 1 3 2.6 1.9-1 3 1 3-2.6 1.9-1 3-3.2-.1L12 21.500l-2.6-1.9-3.2.1-1-3-2.6-1.9 1-3-1-3 2.6-1.9 1-3 3.2.1z"
+          fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" />
+        <path d="M8.3 12.200l2.6 2.6 4.8-5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </symbol>
+      <symbol id="i-recur" viewBox="0 0 24 24">
+        <path d="M4.5 12a7.5 7.5 0 0112.8-5.300L20 9M19.5 12a7.5 7.5 0 01-12.8 5.300L4 15M20 4v5h-5M4 20v-5h5"
+          fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+      </symbol>
+      <symbol id="i-car" viewBox="0 0 24 24">
+        <path d="M4.5 15.500l1.6-5a2 2 0 011.9-1.500h8a2 2 0 011.9 1.500l1.6 5M3.5 15.500h17v3h-17z" fill="none"
+          stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" />
+        <circle cx="7.5" cy="17" r=".7" fill="currentColor" />
+        <circle cx="16.5" cy="17" r=".7" fill="currentColor" />
+      </symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24">
+        <path d="M12 2.500l8 3v6c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10v-6z" fill="none" stroke="currentColor"
+          stroke-width="1.7" stroke-linejoin="round" />
+        <path d="M8.5 12l2.5 2.5 4.5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </symbol>
+      <symbol id="i-star" viewBox="0 0 24 24">
+        <path d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.1 6.100L12 16.8 6.6 19.700l1.1-6.100L3.2 9.400l6.1-.8z" fill="none"
+          stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" />
+      </symbol>
+      <symbol id="i-flag" viewBox="0 0 24 24">
+        <path d="M6 21V4M6 5h11l-2 4 2 4H6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </symbol>
+      <symbol id="i-doc" viewBox="0 0 24 24">
+        <path d="M7 3h7l4 4v14H7z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" />
+        <path d="M14 3v4h4M10 12h5M10 16h5" fill="none" stroke="currentColor" stroke-width="1.7"
+          stroke-linecap="round" />
+      </symbol>
+    </defs>
+  </svg>
+
+  <header class="app-header">
+    <a class="brand" href="index.html"><img src="images/in%20app%20logo.svg" alt="EcoRide"></a>
+    <nav aria-label="Main navigation"><a href="passenger-dashboard.html">Home</a><a
+        href="available-rides.html">Ride</a><a href="#wallet">Wallet</a><a class="active" href="trusted-commute.html"
+        aria-current="page">Recurring Commute</a><a href="#help">Help</a></nav>
+    <div class="header-user" hidden><span class="avatar" aria-hidden="true"></span><span class="user-name"></span></div>
+  </header>
+
+  <main class="page-shell">
+    <button class="back" type="button" onclick="history.back()"><span data-i="back"></span>Back</button>
+    <h1>Trusted Recurring Commute</h1>
+    <p class="intro">Find verified commuters traveling the same route and schedule. Travel together, safer and easier.
+    </p>
+    <h2 class="find"><svg>
+        <use href="#i-search" />
+      </svg>Find commute group</h2>
+
+    <form class="searchbar" id="tc-search" autocomplete="off" aria-label="Find a commute group">
+      <label class="sf"><svg class="pin">
+          <use href="#i-pin" />
+        </svg><span><small>From</small><input id="tc-from" name="from" required></span></label>
+      <button class="swap" type="button" id="tc-swap" aria-label="Swap pickup and destination"><svg>
+          <use href="#i-swap" />
+        </svg></button>
+      <label class="sf"><svg class="pin red">
+          <use href="#i-pin" />
+        </svg><span><small>To</small><input id="tc-to" name="to" required></span></label>
+      <label class="sf"><svg>
+          <use href="#i-cal" />
+        </svg><span><small>Date</small><input type="date" id="tc-date" name="date"></span></label>
+      <label class="sf"><svg>
+          <use href="#i-clock" />
+        </svg><span><small>Time</small><input type="time" id="tc-time" name="time"></span></label>
+      <label class="sf"><svg>
+          <use href="#i-user" />
+        </svg><span><small>Passengers</small><select id="tc-pax" name="pax">
+            <option value="1">1 passenger</option>
+            <option value="2">2 passengers</option>
+            <option value="3">3 passengers</option>
+            <option value="4">4 passengers</option>
+          </select></span></label>
+      <button class="btn search" type="submit"><svg>
+          <use href="#i-search" />
+        </svg>Search</button>
+    </form>
+
+    <section class="groups" aria-labelledby="vg-h">
+      <h2 id="vg-h"><svg>
+          <use href="#i-badge" />
+        </svg>Verified commute group</h2>
+      <p class="sub">Browse available groups that match your route and schedule</p>
+      <div class="cards" id="tc-cards">
+        <p class="state">Loading groups…</p>
+      </div>
+    </section>
+
+    <section class="pool" aria-labelledby="pool-h">
+      <div class="pool-ic"><svg>
+          <use href="#i-users" />
+        </svg></div>
+      <div class="pool-body" id="tc-pools">
+        <div class="pool-title">
+          <h2 id="pool-h">My commute pool</h2>
+          <p>Your active and upcoming commute groups</p>
+        </div>
+        <p class="state" id="tc-pool-state">Loading…</p>
+      </div>
+    </section>
+
+    <section class="trust" aria-labelledby="ts-h">
+      <h2 id="ts-h">Trust &amp; Safety</h2>
+      <p class="sub">Your safety is our priority. We verify all members and vehicles and encourage feedback.</p>
+      <div class="trust-grid">
+        <div><span class="ti"><svg>
+              <use href="#i-shield" />
+            </svg></span><span><b>Identity verified members</b><small>Real people, real journeys</small></span></div>
+        <div><span class="ti"><svg>
+              <use href="#i-doc" />
+            </svg></span><span><b>Driver &amp; vehicle checks</b><small>Background and document
+              verification</small></span></div>
+        <div><span class="ti"><svg>
+              <use href="#i-star" />
+            </svg></span><span><b>Rating &amp; feedback</b><small>Build trust through reviews</small></span></div>
+        <div><span class="ti"><svg>
+              <use href="#i-flag" />
+            </svg></span><span><b>Reports &amp; concerns</b><small>Help keep our community safe</small></span></div>
+      </div>
+    </section>
+  </main>
+
+  <template id="tc-card">
+    <article class="card">
+      <div class="vbadge"><svg>
+          <use href="#i-shield" />
+        </svg>VERIFIED DRIVER</div>
+      <div class="card-in">
+        <div class="top">
+          <span class="av"></span>
+          <div class="who"><b class="nm"></b><span class="rt"><svg>
+                <use href="#i-star" />
+              </svg><span class="rv"></span></span><small class="car"></small></div>
+          <div class="price"><b class="pr"></b><small>per person</small></div>
+          <span class="seats"></span>
+        </div>
+        <div class="route">
+          <div><svg class="pin">
+              <use href="#i-pin" />
+            </svg><span><span class="pk"></span><b class="pt"></b></span></div>
+          <svg class="go">
+            <use href="#i-arrow" />
+          </svg>
+          <div><svg class="pin red">
+              <use href="#i-pin" />
+            </svg><span><span class="dk"></span><b class="dt"></b></span></div>
+        </div>
+        <div class="tags"><span class="vtag"><svg>
+              <use href="#i-car" />
+            </svg><span class="cn"></span></span><span class="rtag"><svg>
+              <use href="#i-recur" />
+            </svg><span class="rd"></span></span></div>
+        <button class="btn join" type="button">Join group<svg>
+            <use href="#i-arrow" />
+          </svg></button>
+      </div>
+    </article>
+  </template>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+  <script src="services.js"></script>
+  <script src="connect.js"></script>
+</body>
+
+</html>

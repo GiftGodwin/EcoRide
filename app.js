@@ -5,7 +5,7 @@ const store = {
 };
 const AUTH_VERSION = "2";
 function clearSession() {
-  ["token", "role", "nin_verified", "name"].forEach((k) =>
+  ["token", "role", "nin_verified", "name", "driver_demo"].forEach((k) =>
     localStorage.removeItem("eco_" + k),
   );
 }
@@ -81,7 +81,7 @@ async function api(path, { method = "GET", body, form } = {}) {
     const d = await r.json().catch(() => null);
     if (!r.ok) console.error("[EcoRide API]", method, path, r.status, d);
     const authCall = path.startsWith("/api/auth/");
-    if (r.status === 401 && !authCall) {
+    if (r.status === 401 && !authCall && store.get("driver_demo") !== "1") {
       localStorage.removeItem("eco_token");
       toast("Your session has expired. Please log in again.");
       setTimeout(() => go("login.html"), 900);

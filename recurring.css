@@ -1046,3 +1046,11 @@ select {
         padding: 12px 14px
     }
 }
+.tc-link {
+    display: inline-block;
+    margin-top: 8px;
+    color: var(--teal);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none
+}

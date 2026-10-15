@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <title>Driver login | EcoRide</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="bar"><a href="index.html"><img class="logo" src="images/in%20app%20logo.svg" alt="EcoRide"></a>
+    </header>
+    <button class="backlink" type="button" aria-label="Go back" data-i="back" onclick="history.back()"></button>
+    <main class="panel">
+        <h1>Welcome Back</h1>
+        <p class="sub">Drive with <span class="eco">Eco<i>Ride</i></span></p>
+        <form class="auth-form" id="form" novalidate>
+            <p class="sub" style="font-weight:600;color:#222;margin:8px 0 4px">Login with your Driver's ID</p>
+            <div class="group">
+                <div class="field" data-f="driverId"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
+                        aria-hidden="true">
+                        <rect x="3" y="5" width="18" height="14" rx="2" />
+                        <circle cx="8.5" cy="11" r="1.6" />
+                        <path d="M6 16c.4-1.4 1.4-2 2.5-2s2.1.6 2.5 2M14 10h4M14 13h3" />
+                    </svg><input id="driverId" type="text" autocomplete="username" placeholder="Driver's ID"
+                        aria-label="Driver's ID"></div>
+                <p class="err-msg" role="alert"></p>
+            </div>
+            <div class="group">
+                <div class="field" data-f="password"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
+                        aria-hidden="true">
+                        <rect x="5" y="11" width="14" height="10" rx="2" />
+                        <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                    </svg>
+                    <input id="password" type="password" autocomplete="current-password" placeholder="Password"
+                        aria-label="Password">
+                    <button class="eye" id="eye" type="button" aria-label="Show password" aria-pressed="false">
+                        <svg class="on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                        <svg class="off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M3 3l18 18M10.6 5.1A10 10 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4M6.6 6.6C3.7 8.4 2 12 2 12s3.5 7 10 7c1.7 0 3.2-.4 4.5-1.1" />
+                            <path d="M9.9 9.9a3 3 0 0 0 4.2 4.2" />
+                        </svg>
+                    </button>
+                </div>
+                <p class="err-msg" role="alert"></p>
+            </div>
+            <div class="aux">
+                <label class="remember"><input type="checkbox" id="remember"> Remember me</label>
+            </div>
+            <button class="btn" id="next" type="submit" disabled>Login</button>
+        </form>
+        <p class="switch">Need help signing in? <a href="#" id="help">Contact your organisation</a></p>
+        <p class="sub" style="font-size:13px;margin-top:6px">Your organisation manages your Driver's ID and Password</p>
+    </main>
+    <script src="app.js"></script>
+    <script>
+        const $ = id => document.getElementById(id);
+        const nx = $('next');
+        const ids = ['driverId', 'password'];
+        const rules = {
+            driverId: v => v.trim().length > 0 || "Enter your Driver's ID",
+            password: v => v.length > 0 || 'Enter your password'
+        };
+        const check = k => rules[k]($(k).value) === true;
+        const show = (k, on) => {
+            const box = $(k).closest('.group'), r = rules[k]($(k).value);
+            box.querySelector('.field').classList.toggle('invalid', on && r !== true);
+            box.querySelector('.err-msg').textContent = on && r !== true ? r : '';
+        };
+        const sync = () => { nx.disabled = !ids.every(check) };
+        ids.forEach(k => {
+            const el = $(k);
+            el.oninput = () => { if (el.closest('.field').classList.contains('invalid')) show(k, true); sync() };
+            el.onblur = () => { if (el.value) show(k, true) };
+        });
+        $('eye').onclick = () => {
+            const p = $('password'), on = p.type === 'password';
+            p.type = on ? 'text' : 'password';
+            $('eye').setAttribute('aria-pressed', on);
+            $('eye').setAttribute('aria-label', on ? 'Hide password' : 'Show password');
+        };
+        $('help').onclick = e => { e.preventDefault(); toast('Please contact your organisation for your Driver\'s ID and password.'); };
+        if (store.get('driver_login_id')) { $('driverId').value = store.get('driver_login_id'); $('remember').checked = true; sync(); }
+
+        // TEMPORARY: no backend driver login exists yet, so any Driver's ID + password gets in.
+        // Replace this block with a real api('/api/...') call once the backend provides one.
+        $('form').onsubmit = e => {
+            e.preventDefault();
+            ids.forEach(k => show(k, true));
+            if (!ids.every(check)) return;
+            const id = $('driverId').value.trim();
+            store.set('token', 'driver-demo');
+            store.set('driver_demo', '1');
+            store.set('role', 'driver');
+            store.set('name', id);
+            if ($('remember').checked) store.set('driver_login_id', id); else localStorage.removeItem('eco_driver_login_id');
+            go('driver-dashboard.html');
+        };
+        $('driverId').focus();
+    </script>
+</body>
+
+</html>

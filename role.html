@@ -26,10 +26,18 @@
     </main>
     <script src="app.js"></script>
     <script>
-        // Role is chosen after identity verification, then the user lands on their dashboard.
+        // Landing "Get started" lands here first.
+        // Passenger -> existing sign-up / OTP / NIN / face flow. Driver -> driver login.
+        // A signed-in user (e.g. arriving here after face verification) keeps the old behaviour: straight to their dashboard.
+        const signedIn = !!store.get('token') && store.get('driver_demo') !== '1';
+        if (signedIn && store.get('role')) go(homeFor(store.get('role')));
         document.querySelectorAll('[data-role]').forEach(b => b.onclick = () => {
-            store.set('role', b.dataset.role);
-            go(homeFor(b.dataset.role));
+            const role = b.dataset.role;
+            if (signedIn) { store.set('role', role); go(homeFor(role)); return; }
+            if (role === 'driver') { go('driver-login.html'); return; }
+            localStorage.removeItem('eco_driver_demo');
+            store.set('role', 'passenger');
+            go('signup.html');
         });
     </script>
 </body>

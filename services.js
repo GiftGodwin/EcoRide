@@ -335,6 +335,18 @@ const EcoAPI = (() => {
     };
   };
 
+  const pool = (p) => {
+    p = p || {};
+    return {
+      id: pick(p, ["id", "_id", "poolId"]),
+      status: String(pick(p, ["status"], "active")),
+      from: str(pick(p, ["from", "origin", "route.origin", "commute.route.origin", "commute.from"])),
+      to: str(pick(p, ["to", "destination", "route.destination", "commute.route.destination", "commute.to"])),
+      days: pick(p, ["days", "schedule.days", "commute.schedule.days", "commute.days"], []),
+      departureTime: pick(p, ["departureTime", "schedule.departureTime", "commute.schedule.departureTime", "commute.departureTime"]),
+    };
+  };
+
   // ---------- endpoints ----------
   const req = (path, method, body) =>
     api(path, body === undefined ? { method } : { method, body });
@@ -385,6 +397,11 @@ const EcoAPI = (() => {
       req("/api/recurring-commutes", "GET").then((d) => asList(d).map(commute)),
     getMatches: (commuteId) =>
       req("/api/matching/commutes/" + encodeURIComponent(commuteId), "GET"),
+    // commute pools
+    getPools: () =>
+      req("/api/commute-pools", "GET").then((d) => asList(d).map(pool)),
+    joinPool: (poolId) =>
+      req("/api/commute-pools/" + encodeURIComponent(poolId) + "/join", "POST"),
     // bookings
     getBookings: () => req("/api/bookings", "GET"),
     getBooking: (id) => req("/api/bookings/" + encodeURIComponent(id), "GET"),
